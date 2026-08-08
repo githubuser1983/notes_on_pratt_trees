@@ -1,0 +1,894 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist[itemize]{topsep=0.3em,itemsep=0.15em}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{problem}[theorem]{Problem}
+
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cR}{\mathfrak R}
+\newcommand{\cO}{\mathfrak O}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Div}{\operatorname{Div}}
+
+\title{\textbf{A Note on RRFS to Orbit Systems}\\[0.35em]
+\large Boundary M\"obius Inversion, Zeta Functions, and Prime-Number Laws}
+\author{Orges Leka\\\small with mathematical assistance from ChatGPT 5.6}
+\date{August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We isolate a canonical passage from a properly normed ranked recursive factorization system (RRFS) to an Orbit System (OS). The construction does not use the recursive Pratt order. Instead it uses the ordinary factorization boundary: the divisibility poset of the factorial monoid underlying the RRFS. The total layer mass is $\log N(h)$. M\"obius inversion on the divisibility poset produces a primitive mass supported exactly on powers of single atoms,
+\[
+\Lambda_{\cR,N}(h)=
+\begin{cases}
+\log N(\alpha),&h=\alpha^m,\ m\ge1,\\
+0,&\text{otherwise},
+\end{cases}
+\]
+which is precisely the boundary von Mangoldt weight obtained from the logarithmic derivative of the RRFS zeta function. Using singleton primitive models and the free layer construction gives a canonical measured Orbit System whose primitive-mass Dirichlet transform is
+\[
+-\frac{\zeta'_{\cR,N}}{\zeta_{\cR,N}}(s).
+\]
+Thus the zeta function and the prime-number law are analytic and asymptotic descriptions of the same boundary primitive distribution, once the RRFS and OS use the same norm gauge. We distinguish this canonical \emph{boundary Orbit System} from the generally different \emph{Pratt Orbit System} obtained by M\"obius inversion in recursive coordinates. Natural numbers, monic polynomials over finite fields, and Dedekind ideals illustrate the transfer. In the finite-field case we also record the lattice-variable form, where coefficient extraction and M\"obius inversion recover the exact irreducible-polynomial formula and hence the exponential prime-number law.
+\end{abstract}
+
+\textbf{Status and scope.}
+The classical divisor M\"obius inversion, Euler products, von Mangoldt identities, the Riemann and Dedekind zeta functions, and the irreducible-polynomial formula over finite fields are standard. The point of this note is the structural synthesis: for a normed RRFS, the factorization boundary canonically carries an Orbit System whose primitive mass is exactly the logarithmic-derivative coefficient system of the RRFS zeta. No novelty is claimed for the classical special cases.
+
+\tableofcontents
+
+\section{Introduction}
+
+Two structures have been developed for related but different purposes. A ranked recursive factorization system begins with a factorial monoid and adds a rank-decreasing predecessor map. Its Green operator
+\[
+G_{\cR}=(I-B)^{-1}
+\]
+propagates root multiplicities into full recursive populations. A multiplicative norm may be represented by a Green energy, and unique factorization then gives an Euler product for the RRFS zeta function.
+
+An Orbit System begins elsewhere: with a locally finite type poset, finite measured layers, primitive strata, finite symmetry groups, and a proper gauge. M\"obius inversion isolates primitive mass. In the measured setting used here, the primary prime-number law concerns the cumulative primitive mass; an unweighted counting law for underlying RRFS atoms requires the additional removal-of-powers and partial-summation steps described below.
+
+The natural question is whether there is a precise direction
+\[
+\boxed{\mathrm{RRFS}\longrightarrow\mathrm{OS}}
+\]
+that also explains the familiar chain
+\[
+\zeta\longrightarrow -\frac{\zeta'}{\zeta}\longrightarrow\Psi\longrightarrow \mathrm{PNT}.
+\]
+The answer is yes, but one must choose the correct OS. The canonical object attached to the zeta function is not initially the Pratt-coordinate OS. It is the \emph{boundary OS} built from ordinary divisibility in the factorial monoid.
+
+The main theorem can be summarized by the commutative picture
+\[
+\boxed{
+\begin{array}{ccccc}
+B&\longrightarrow&G=(I-B)^{-1}&\longrightarrow&N\\
+&&&&\downarrow\\
+&&&&(H,\mid),\quad F(h)=\log N(h)\\
+&&&&\downarrow\ \text{M\"obius}\\
+&&&&\Lambda_{\cR,N}\\
+&&&&\downarrow\\
+&&&&\text{Boundary Orbit System}\\
+&&&&\updownarrow\\[-1mm]
+&&&&-\zeta'_{\cR,N}/\zeta_{\cR,N}.
+\end{array}}
+\]
+The Green geometry enters by producing or representing the norm. The zeta-to-PNT bridge itself lives on the ordinary factorization boundary.
+
+\section{RRFS and Green gauges}
+
+\begin{definition}[Ranked recursive factorization system]
+An RRFS is a quadruple
+\[
+\cR=(H,\cA,D,\rho)
+\]
+with the following properties:
+\begin{enumerate}[label=(\roman*)]
+\item $H$ is a reduced factorial commutative cancellative monoid with atom set $\cA$;
+\item $D:\cA\to H$ is a predecessor map;
+\item $\rho:\cA\to\NN_0$ is a rank;
+\item if $\beta\mid D\alpha$, then $\rho(\beta)<\rho(\alpha)$.
+\end{enumerate}
+An atom $\tau$ with $D\tau=1$ is terminal.
+\end{definition}
+
+Every $h\in H$ has a unique factorization
+\[
+h=\prod_{\alpha\in\cA}\alpha^{v_\alpha(h)}.
+\]
+Write
+\[
+D\alpha=\prod_{\beta\in\cA}\beta^{B_{\beta,\alpha}}.
+\]
+Rank descent makes $B$ locally nilpotent on finitely supported vectors. If $M_\beta(h)$ is the total number of $\beta$-vertices in the fully unfolded recursive forest of $h$, then
+\[
+M(h)=v(h)+BM(h),
+\qquad
+M(h)=G_{\cR}v(h),
+\qquad
+G_{\cR}=(I-B)^{-1}.
+\]
+
+The telescoping reconstruction in the quotient group $q(H)$ is
+\begin{equation}\label{eq:reconstruction}
+h=\prod_{\alpha\in\cA}
+\left(\frac{\alpha}{D\alpha}\right)^{M_\alpha(h)}.
+\end{equation}
+
+\begin{definition}[Proper multiplicative norm]
+A map $N:H\to\RR_{>0}$ is a proper multiplicative norm if
+\[
+N(hg)=N(h)N(g),\qquad N(1)=1,
+\]
+$N(\alpha)>1$ for every atom $\alpha$, and each bounded norm ball
+\[
+\{h\in H:N(h)\le X\}
+\]
+is finite.
+\end{definition}
+
+Set
+\[
+c_\alpha:=\log N(\alpha).
+\]
+The inverse dual Green transform defines local recursive increments
+\begin{equation}\label{eq:eps}
+\varepsilon_\alpha
+=c_\alpha-\sum_\beta B_{\beta,\alpha}c_\beta
+=\log\frac{N(\alpha)}{N(D\alpha)}.
+\end{equation}
+Then
+\begin{equation}\label{eq:greenenergy}
+\log N(h)=\varepsilon^{\mathsf T}G_{\cR}v(h)
+=\sum_\alpha M_\alpha(h)\log\frac{N(\alpha)}{N(D\alpha)}.
+\end{equation}
+Thus the norm may be viewed either at the root boundary or in recursive Green coordinates.
+
+\begin{definition}[RRFS zeta function]
+In every half-plane of absolute convergence define
+\[
+\zeta_{\cR,N}(s)=\sum_{h\in H}N(h)^{-s}.
+\]
+Unique factorization gives
+\begin{equation}\label{eq:euler}
+\boxed{
+\zeta_{\cR,N}(s)
+=\prod_{\alpha\in\cA}
+\left(1-N(\alpha)^{-s}\right)^{-1}.}
+\end{equation}
+\end{definition}
+
+The construction below uses only the factorial boundary and $N$. The predecessor $D$ and Green operator remain important because they may generate the same $N$ through \eqref{eq:greenenergy}. In particular, distinct Green geometries may induce the same boundary zeta and hence the same boundary OS.
+
+\section{Orbit Systems}
+
+We use the following minimal measured version.
+
+\begin{definition}[Orbit System]
+An Orbit System is data
+\[
+\cO=(P,\{(X_t,\mu_t)\}_{t\in P},\{(E_t,G_t)\}_{t\in P},\nu)
+\]
+satisfying:
+\begin{itemize}
+\item[\textbf{OS1.}] $P$ is locally finite, and each $X_t$ is a finite set with a nonnegative additive measure $\mu_t$.
+\item[\textbf{OS2.}] There is a disjoint primitive stratification
+\[
+X_t=\bigsqcup_{s\preceq t}E_s^{(t)},
+\]
+where $E_s^{(t)}$ is canonically identified, as a measured set, with a primitive model $E_s$ independent of $t$.
+\item[\textbf{OS3.}] A finite group $G_s$ acts measure-preservingly on $E_s$; the type-$s$ atom space is $A_s=E_s/G_s$.
+\item[\textbf{OS4.}] A proper gauge $\nu:\bigsqcup_s A_s\to\RR_{\ge0}$ is specified, so bounded gauge intervals contain only finitely many atoms.
+\end{itemize}
+\end{definition}
+
+Write
+\[
+F(t):=\mu_t(X_t),\qquad P_0(t):=\mu_t(E_t).
+\]
+Then OS2 gives
+\begin{equation}\label{eq:master}
+F(t)=\sum_{s\preceq t}P_0(s),
+\end{equation}
+and local finiteness permits M\"obius inversion.
+
+\begin{proposition}[Free layer construction]\label{prop:free}
+Let $P$ be a lower-finite poset, meaning that every principal lower set $P_{\le t}:=\{s\in P:s\preceq t\}$ is finite. Suppose that for each $s\in P$ one has a finite measured $G_s$-set $E_s$. Define
+\[
+X_t:=\bigsqcup_{s\preceq t}E_s
+\]
+with the disjoint-union measure. Then OS1--OS3 hold. Any proper gauge on the quotient atom set completes an Orbit System.
+\end{proposition}
+
+\begin{proof}
+Lower finiteness makes the principal lower set $\{s:s\preceq t\}$ finite, hence $X_t$ is finite. The displayed disjoint union is exactly OS2. Each $G_s$ is already a finite measure-preserving symmetry group on its primitive model, giving OS3. A proper gauge is precisely OS4.
+\end{proof}
+
+\section{The factorization boundary of an RRFS}
+
+Let $\cR=(H,\cA,D,\rho)$ be a properly normed RRFS. We now forget the recursive order temporarily and use ordinary divisibility.
+
+\begin{definition}[Boundary poset]
+The boundary poset of $\cR$ is
+\[
+P_{\partial\cR}:=(H,\mid).
+\]
+\end{definition}
+
+\begin{lemma}[Local finiteness]\label{lem:localfinite}
+The divisibility poset $(H,\mid)$ is locally finite.
+\end{lemma}
+
+\begin{proof}
+If
+\[
+h=\alpha_1^{e_1}\cdots\alpha_r^{e_r},
+\]
+then every divisor of $h$ has the unique form
+\[
+d=\alpha_1^{f_1}\cdots\alpha_r^{f_r},
+\qquad 0\le f_i\le e_i.
+\]
+Hence the lower interval of $h$ has exactly
+\[
+\prod_{i=1}^r(e_i+1)
+\]
+elements. More generally every interval $[a,b]$ is finite after cancelling the common lower factor.
+\end{proof}
+
+The interval structure is a finite product of chains. This gives an explicit M\"obius function.
+
+\begin{lemma}[Boundary M\"obius function]\label{lem:mobius}
+Let
+\[
+a=\prod_i\alpha_i^{f_i},\qquad
+b=\prod_i\alpha_i^{e_i},\qquad a\mid b.
+\]
+Then
+\[
+\mu_H(a,b)=\prod_i\mu_{\mathrm{ch}}(f_i,e_i),
+\]
+where for a chain
+\[
+\mu_{\mathrm{ch}}(r,s)=
+\begin{cases}
+1,&s=r,\\
+-1,&s=r+1,\\
+0,&s\ge r+2.
+\end{cases}
+\]
+Equivalently, $\mu_H(a,b)$ is nonzero only when each exponent difference $e_i-f_i$ is $0$ or $1$, in which case
+\[
+\mu_H(a,b)=(-1)^{\sum_i(e_i-f_i)}.
+\]
+\end{lemma}
+
+\begin{proof}
+The interval $[a,b]$ is canonically the Cartesian product of the exponent chains $[f_i,e_i]$. The M\"obius function of a finite product of locally finite posets is the product of the individual M\"obius functions. The M\"obius function of a chain vanishes at distance at least two and equals $-1$ at distance one. Multiplication gives the formula.
+\end{proof}
+
+\section{M\"obius inversion of the logarithmic norm}
+
+Define the total boundary mass
+\begin{equation}\label{eq:F}
+F(h):=\log N(h).
+\end{equation}
+Because $N$ is multiplicative,
+\begin{equation}\label{eq:additive}
+F(h)=\sum_{\alpha\in\cA}v_\alpha(h)\log N(\alpha).
+\end{equation}
+
+\begin{definition}[Boundary primitive mass]
+Define
+\begin{equation}\label{eq:P0}
+P_0(h):=\sum_{d\mid h}\mu_H(d,h)\log N(d).
+\end{equation}
+By M\"obius inversion,
+\begin{equation}\label{eq:invert}
+\log N(h)=\sum_{d\mid h}P_0(d).
+\end{equation}
+\end{definition}
+
+The decisive computation is that $P_0$ is supported exactly on atom powers.
+
+\begin{theorem}[Boundary von Mangoldt theorem]\label{thm:mangoldt}
+For every $h\in H$,
+\[
+\boxed{
+P_0(h)=\Lambda_{\cR,N}(h):=
+\begin{cases}
+\log N(\alpha),&h=\alpha^m\text{ for some }\alpha\in\cA,\ m\ge1,\\
+0,&\text{otherwise}.
+\end{cases}}
+\]
+Consequently
+\begin{equation}\label{eq:abstractmangoldt}
+\boxed{\log N(h)=\sum_{d\mid h}\Lambda_{\cR,N}(d).}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+If $h=1$, then $P_0(1)=\log N(1)=0$. Now suppose $h=\alpha^m$ with $m\ge1$. By Lemma \ref{lem:mobius}, only the divisors $\alpha^m$ and, when $m\ge1$, $\alpha^{m-1}$ can contribute to \eqref{eq:P0}. Therefore
+\[
+\begin{aligned}
+P_0(\alpha^m)
+&=\log N(\alpha^m)-\log N(\alpha^{m-1})\\
+&=m\log N(\alpha)-(m-1)\log N(\alpha)\\
+&=\log N(\alpha).
+\end{aligned}
+\]
+
+Now suppose
+\[
+h=\alpha_1^{e_1}\cdots\alpha_r^{e_r},\qquad r\ge2.
+\]
+Using \eqref{eq:additive}, write
+\[
+\log N(d)=\sum_{j=1}^r f_j\log N(\alpha_j)
+\]
+for $d=\prod_j\alpha_j^{f_j}$. Insert this into \eqref{eq:P0} and interchange the finite sums. For a fixed $j$, choose $k\ne j$. The $j$-th summand is independent of the exponent $f_k$, while the M\"obius factor in the $k$-th coordinate sums to
+\[
+\sum_{f_k\le e_k}\mu_{\mathrm{ch}}(f_k,e_k)=0
+\]
+because $e_k\ge1$. Hence every $j$-summand vanishes. Therefore $P_0(h)=0$ when at least two distinct atom types occur.
+
+Finally \eqref{eq:abstractmangoldt} is exactly the inverse M\"obius relation \eqref{eq:invert}.
+\end{proof}
+
+\begin{remark}
+The proof uses factoriality and multiplicativity of $N$, but not the predecessor map. This is not a defect: it identifies exactly where the zeta/PNT mechanism lives. Recursive geometry may determine the norm through the Green identity \eqref{eq:greenenergy}; once the norm reaches the factorization boundary, ordinary M\"obius inversion produces the von Mangoldt mass.
+\end{remark}
+
+\section{The canonical boundary Orbit System}
+
+We can now construct the OS itself.
+
+\begin{theorem}[RRFS-to-Boundary-OS transfer]\label{thm:transfer}
+Let $(\cR,N)$ be a properly normed RRFS. There is a canonical singleton realization (and hence a canonical measured Orbit System, up to the evident measure-preserving isomorphism)
+\[
+\partial\cO(\cR,N)
+\]
+over the boundary poset $(H,\mid)$ with the following properties:
+\begin{enumerate}[label=(\roman*)]
+\item the total layer mass at $h$ is
+\[
+F(h)=\log N(h);
+\]
+\item the primitive layer at $h$ is nonempty exactly when $h=\alpha^m$ is a power of one atom;
+\item if $h=\alpha^m$, its primitive mass is
+\[
+P_0(h)=\log N(\alpha);
+\]
+\item all primitive symmetry groups are taken to be trivial;
+\item the natural gauge is
+\[
+\nu(\ast_{\alpha^m})=N(\alpha^m).
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Take $P=(H,\mid)$. By Lemma \ref{lem:localfinite}, each principal lower set $P_{\le t}=[1,t]$ is finite, so $P$ is lower finite (and in particular locally finite). For each $h\in H$, define
+\[
+E_h=
+\begin{cases}
+\{\ast_h\},&h=\alpha^m,\\
+\varnothing,&\text{otherwise}.
+\end{cases}
+\]
+Give the singleton $E_{\alpha^m}$ total mass $\log N(\alpha)$ and the empty set mass zero. These are nonnegative because $N(\alpha)>1$. Let every $G_h$ be the trivial group.
+
+Define the total layer by the free construction
+\[
+X_t:=\bigsqcup_{d\mid t}E_d.
+\]
+Proposition \ref{prop:free} gives OS1--OS3. The total mass is
+\[
+\mu_t(X_t)
+=\sum_{d\mid t}\mu_d(E_d)
+=\sum_{d\mid t}\Lambda_{\cR,N}(d)
+=\log N(t)
+\]
+by Theorem \ref{thm:mangoldt}. Finally set
+\[
+\nu(\ast_{\alpha^m})=N(\alpha^m).
+\]
+Properness of $N$ implies that only finitely many primitive atoms lie in each bounded gauge interval, so OS4 holds.
+\end{proof}
+
+\begin{corollary}[Canonical primitive-mass identity]\label{cor:canonical}
+The boundary primitive mass of $\partial\cO(\cR,N)$ is exactly the RRFS boundary von Mangoldt weight:
+\[
+\boxed{P_0=\Lambda_{\cR,N}.}
+\]
+\end{corollary}
+
+\section{The zeta function is the transform of OS primitive mass}
+
+The preceding theorem is combinatorial. The analytic bridge is now immediate.
+
+\begin{theorem}[Zeta--OS logarithmic derivative identity]\label{thm:zetaos}
+Assume the RRFS zeta has a nonempty half-plane of absolute convergence. For every $s$ strictly inside that half-plane (equivalently, for $\Re s>\sigma_a$ when the abscissa of absolute convergence $\sigma_a<\infty$),
+\begin{equation}\label{eq:logder}
+\boxed{
+-\frac{\zeta'_{\cR,N}}{\zeta_{\cR,N}}(s)
+=\sum_{h\in H}\Lambda_{\cR,N}(h)N(h)^{-s}
+=\sum_{h\in H}P_0(h)N(h)^{-s}.}
+\end{equation}
+Thus $-\zeta'/\zeta$ is exactly the Dirichlet transform of the primitive mass of the canonical boundary Orbit System.
+\end{theorem}
+
+\begin{proof}
+From the Euler product \eqref{eq:euler},
+\[
+\log\zeta_{\cR,N}(s)
+=\sum_{\alpha\in\cA}\sum_{m\ge1}
+\frac{N(\alpha)^{-ms}}{m}.
+\]
+Fix $s$ strictly inside the half-plane of absolute convergence and choose $\sigma_0$ with $\sigma_a<\sigma_0<\Re s$. Since $(\log x)x^{-\Re s}\ll x^{-\sigma_0}$ for $x\ge1$, the logarithmically weighted series converges absolutely there. Hence termwise differentiation is justified:
+\[
+-\frac{\zeta'_{\cR,N}}{\zeta_{\cR,N}}(s)
+=\sum_{\alpha\in\cA}\sum_{m\ge1}
+\log N(\alpha)\,N(\alpha)^{-ms}.
+\]
+By Theorem \ref{thm:mangoldt}, the coefficient attached to $h=\alpha^m$ is exactly $\Lambda_{\cR,N}(h)$ and all other $h$ have coefficient zero. Corollary \ref{cor:canonical} identifies this with $P_0(h)$.
+\end{proof}
+
+\begin{definition}[Boundary Chebyshev functions]
+Define
+\[
+\Psi_{\cR,N}(X)
+:=\sum_{N(h)\le X}\Lambda_{\cR,N}(h)
+=\sum_{\substack{\alpha\in\cA,\ m\ge1\\N(\alpha)^m\le X}}
+\log N(\alpha),
+\]
+\[
+\vartheta_{\cR,N}(X)
+:=\sum_{\substack{\alpha\in\cA\\N(\alpha)\le X}}
+\log N(\alpha),
+\qquad
+\pi_{\cR,N}(X)
+:=\#\{\alpha\in\cA:N(\alpha)\le X\}.
+\]
+\end{definition}
+
+Then \eqref{eq:logder} may be written as the Mellin--Stieltjes transform
+\begin{equation}\label{eq:stieltjes}
+-\frac{\zeta'}{\zeta}(s)
+=\int_{1^-}^{\infty}x^{-s}\,d\Psi_{\cR,N}(x).
+\end{equation}
+Whenever boundary terms are controlled, integration by parts gives
+\begin{equation}\label{eq:ibp}
+-\frac{\zeta'}{\zeta}(s)
+=s\int_1^{\infty}\Psi_{\cR,N}(x)x^{-s-1}\,dx.
+\end{equation}
+
+\subsection{From primitive mass to atom counting}
+
+The logarithmic derivative naturally measures atom powers with von Mangoldt weight. Thus $\Psi_{\cR,N}$ is the cumulative primitive-mass function of the boundary OS, not an unweighted count of its orbit atoms. A PNT for the original RRFS atoms requires the further, familiar removal-of-higher-powers and partial-summation steps.
+
+\begin{proposition}[Removal of higher powers]\label{prop:powers}
+Let $M(X)>0$ be a proposed main term. If
+\[
+R_2(X):=
+\sum_{\substack{\alpha\in\cA,\ m\ge2\\N(\alpha)^m\le X}}
+\log N(\alpha)
+=o(M(X)),
+\]
+then
+\[
+\Psi_{\cR,N}(X)\sim M(X)
+\quad\Longleftrightarrow\quad
+\vartheta_{\cR,N}(X)\sim M(X).
+\]
+\end{proposition}
+
+\begin{proof}
+By definition
+\[
+\Psi_{\cR,N}(X)=\vartheta_{\cR,N}(X)+R_2(X).
+\]
+The claim follows immediately.
+\end{proof}
+
+\begin{proposition}[Partial summation]\label{prop:partial}
+Assume $\vartheta_{\cR,N}(X)\sim C X^\delta$ for some $C,\delta>0$. Then, provided the norm spectrum is nonlattice enough for ordinary real-variable asymptotics,
+\[
+\boxed{\pi_{\cR,N}(X)\sim \frac{C X^\delta}{\log X}.}
+\]
+\end{proposition}
+
+\begin{proof}
+Stieltjes partial summation gives
+\[
+\pi_{\cR,N}(X)
+=\frac{\vartheta_{\cR,N}(X)}{\log X}
++\int_{2}^{X}\frac{\vartheta_{\cR,N}(t)}{t(\log t)^2}\,dt
++O(1).
+\]
+The first term is asymptotic to $CX^\delta/\log X$. The integral is $O(X^\delta/(\log X)^2)$, hence lower order.
+\end{proof}
+
+\begin{remark}[Lattice gauges]
+For systems such as $\FF_q[x]$ the norm spectrum is geometric, $N(P)=q^{\deg P}$. The continuous function $\Psi(X)$ has unavoidable log-periodic step behavior, so a clean real-variable asymptotic may need to be stated along the natural layers $X=q^n$. In that situation the generating variable $u=q^{-s}$ is more canonical, and coefficient extraction replaces a nonlattice Tauberian theorem. Section \ref{sec:finitefield} gives the exact calculation.
+\end{remark}
+
+\subsection{A conditional Tauberian transfer}
+
+The exact identity \eqref{eq:logder} needs no analytic continuation. A prime-number asymptotic does.
+
+\begin{theorem}[Conditional zeta-to-PNT transfer]\label{thm:tauber}
+Since $N(\alpha)>1$, the primitive masses are nonnegative and $\Psi_{\cR,N}$ is automatically nondecreasing. Suppose, for some $\delta>0$ and $A>0$, the function
+\[
+-\frac{\zeta'_{\cR,N}}{\zeta_{\cR,N}}(s)-\frac{A}{s-\delta}
+\]
+has the boundary regularity required by an appropriate Wiener--Ikehara theorem on the line $\Re s=\delta$. Then
+\[
+\boxed{
+\Psi_{\cR,N}(X)\sim \frac{A}{\delta}X^\delta.}
+\]
+If in addition higher atom powers are negligible in the sense of Proposition \ref{prop:powers}, then
+\[
+\vartheta_{\cR,N}(X)\sim \frac{A}{\delta}X^\delta,
+\]
+and under the hypotheses of Proposition \ref{prop:partial},
+\[
+\pi_{\cR,N}(X)
+\sim
+\frac{A}{\delta}\frac{X^\delta}{\log X}.
+\]
+\end{theorem}
+
+\begin{proof}
+Equation \eqref{eq:stieltjes} identifies $-\zeta'/\zeta$ with the Mellin--Stieltjes transform of a nonnegative measure. After the logarithmic change of variables $X=e^t$, the standard Wiener--Ikehara theorem applies to the corresponding Laplace--Stieltjes transform. A simple pole of residue $A$ at $s=\delta$ produces main term $(A/\delta)X^\delta$. The remaining statements follow from Propositions \ref{prop:powers} and \ref{prop:partial}.
+\end{proof}
+
+\begin{remark}
+The theorem deliberately states the analytic continuation/boundary hypothesis rather than hiding it. An Euler product alone does not prove a PNT. The exact RRFS-to-OS transfer is algebraic; the PNT is the additional analytic conclusion obtained from the singularity structure of the same zeta function.
+\end{remark}
+
+\section{Natural numbers}
+
+Take
+\[
+H=\NN_{\ge1},\qquad \cA=\{2,3,5,\ldots\},
+\]
+with ordinary prime factorization, and use the numerical Pratt predecessor
+\[
+D(2)=1,\qquad D(p)=p-1\quad(p>2).
+\]
+With the ordinary norm $N(n)=n$, the Green increments are
+\[
+\varepsilon_p=\log\frac{p}{p-1},
+\]
+and the Green reconstruction gives
+\[
+\log n=\sum_p M_p(n)\log\frac{p}{p-1}.
+\]
+Nevertheless the boundary construction uses ordinary divisibility. Theorem \ref{thm:mangoldt} gives
+\[
+P_0(n)=\Lambda(n)=
+\begin{cases}
+\log p,&n=p^m,\\
+0,&\text{otherwise}.
+\end{cases}
+\]
+Thus
+\[
+\log n=\sum_{d\mid n}\Lambda(d).
+\]
+The zeta function is
+\[
+\zeta_{\cR,N}(s)=\prod_p(1-p^{-s})^{-1}=\zeta(s),
+\]
+and Theorem \ref{thm:zetaos} becomes the classical identity
+\[
+-\frac{\zeta'}{\zeta}(s)
+=\sum_{n\ge1}\frac{\Lambda(n)}{n^s}.
+\]
+The induced boundary OS has
+\[
+\Psi(X)=\sum_{p^m\le X}\log p.
+\]
+The classical prime number theorem is exactly
+\[
+\Psi(X)\sim X,
+\]
+and higher powers are negligible, giving
+\[
+\vartheta(X)\sim X,
+\qquad
+\pi(X)\sim\frac{X}{\log X}.
+\]
+
+This example shows the division of labor sharply: the Pratt predecessor changes the recursive Green geometry, but the canonical zeta-compatible OS is controlled by the ordinary factorization boundary.
+
+\section{Finite-field polynomials}\label{sec:finitefield}
+
+Let
+\[
+H_q=\{\text{monic polynomials in }\FF_q[x]\}
+\]
+with monic irreducible atoms $P$. A polynomial RRFS may be obtained from a rank-decreasing predecessor such as $D(P)=P-P(0)$ for $P\ne x$ and $D(x)=1$. For the zeta/PNT transfer we use the norm
+\[
+N(f)=q^{\deg f}.
+\]
+The boundary primitive mass is
+\[
+\Lambda_q(f)=
+\begin{cases}
+(\deg P)\log q,&f=P^m,\\
+0,&\text{otherwise}.
+\end{cases}
+\]
+The zeta function is
+\[
+Z_q(s)
+=\prod_{P\ \mathrm{irr}}
+(1-q^{-s\deg P})^{-1}
+=\sum_{f\ \mathrm{monic}}q^{-s\deg f}
+=\frac{1}{1-q^{1-s}}.
+\]
+
+For the lattice structure put
+\[
+u=q^{-s}.
+\]
+Then
+\begin{equation}\label{eq:fqzeta}
+Z_q(u)=\prod_P(1-u^{\deg P})^{-1}=\frac{1}{1-qu}.
+\end{equation}
+Taking the logarithmic derivative with respect to $u$ gives
+\[
+u\frac{d}{du}\log Z_q(u)
+=\sum_P\sum_{m\ge1}(\deg P)u^{m\deg P}
+=\frac{qu}{1-qu}
+=\sum_{n\ge1}q^n u^n.
+\]
+Comparing coefficients yields the exact identity
+\begin{equation}\label{eq:coeff}
+\boxed{
+q^n=\sum_{d\mid n} d\,I_q(d),}
+\end{equation}
+where $I_q(d)$ is the number of monic irreducible polynomials of degree $d$.
+
+M\"obius inversion gives
+\begin{equation}\label{eq:iq}
+\boxed{
+I_q(n)=\frac1n\sum_{d\mid n}\mu(d)q^{n/d}.}
+\end{equation}
+Since every proper divisor $d>1$ contributes an exponent at most $n/2$,
+\[
+I_q(n)=\frac{q^n}{n}+O\!\left(\frac{q^{n/2}\tau(n)}{n}\right),
+\]
+so in particular
+\[
+\boxed{I_q(n)\sim\frac{q^n}{n}.}
+\]
+
+Thus in the finite-field lattice case the RRFS zeta yields the OS prime-number law by \emph{exact coefficient extraction} rather than by a continuous Tauberian theorem. The familiar exponential layer law is the natural degree-coordinate form of the same zeta/primitive-mass mechanism.
+
+\section{Dedekind ideals}
+
+Let $K$ be a number field and let $H_K$ be the multiplicative monoid of nonzero integral ideals of $\mathcal O_K$. It is factorial, with nonzero prime ideals $\mathfrak p$ as atoms. Equip it with the ideal norm
+\[
+N(\mathfrak a)=\#(\mathcal O_K/\mathfrak a).
+\]
+For an ideal-Pratt RRFS one may use a rank-decreasing predecessor constructed from the rational prime below $\mathfrak p$; the present theorem does not depend on the precise predecessor once the norm is fixed.
+
+The boundary primitive mass is
+\[
+\Lambda_K(\mathfrak a)=
+\begin{cases}
+\log N\mathfrak p,&\mathfrak a=\mathfrak p^m,\\
+0,&\text{otherwise}.
+\end{cases}
+\]
+and
+\[
+\log N\mathfrak a=\sum_{\mathfrak d\mid\mathfrak a}\Lambda_K(\mathfrak d).
+\]
+The RRFS zeta is the Dedekind zeta function
+\[
+\zeta_K(s)
+=\prod_{\mathfrak p}
+(1-N\mathfrak p^{-s})^{-1},
+\]
+so
+\[
+-\frac{\zeta'_K}{\zeta_K}(s)
+=\sum_{\mathfrak a}\Lambda_K(\mathfrak a)N\mathfrak a^{-s}.
+\]
+The induced boundary OS therefore packages prime-ideal powers as primitive mass. Standard analytic information about $\zeta_K$ then yields the prime ideal theorem. Again the Green geometry may refine splitting and ramification while the boundary zeta and boundary OS remain attached only to the factorial ideal boundary and its norm.
+
+\section{Boundary OS versus Pratt OS}
+
+The construction above should be distinguished from the OS obtained from recursive coordinates.
+
+For an RRFS define the Pratt order
+\[
+a\preceq_{\cR}b
+\quad\Longleftrightarrow\quad
+M_\alpha(a)\le M_\alpha(b)
+\quad\text{for every }\alpha\in\cA.
+\]
+Injectivity of $M$ and finite support imply local finiteness. M\"obius inversion in this different poset gives the Pratt-primitive logarithmic transform
+\begin{equation}\label{eq:prattlambda}
+\Lambda^{\mathrm{Pratt}}_{\cR,N}(h)
+:=\sum_{a\preceq_{\cR}h}
+\mu_{\cR}(a,h)\log N(a),
+\end{equation}
+with
+\[
+\log N(h)=\sum_{a\preceq_{\cR}h}
+\Lambda^{\mathrm{Pratt}}_{\cR,N}(a).
+\]
+If these coefficients are nonnegative, the free construction again gives an Orbit System.
+
+However, in general
+\[
+\boxed{
+\Lambda^{\mathrm{Pratt}}_{\cR,N}
+\ne
+\Lambda_{\cR,N}.}
+\]
+The first is M\"obius inversion in recursive Green coordinates; the second is M\"obius inversion on the ordinary factorization boundary. Therefore
+\[
+-\frac{\zeta'}{\zeta}
+\]
+is canonically the transform of the \emph{boundary} primitive mass, not automatically of the Pratt primitive mass.
+
+This yields two distinct RRFS-to-OS directions:
+\[
+\boxed{
+\begin{array}{ccc}
+&\cR&\\[1mm]
+\swarrow&&\searrow\\[-1mm]
+\partial\cO(\cR,N)&&\cO_{\mathrm{Pratt}}(\cR,N)\\
+(H,\mid)&&(H,\preceq_{\cR})\\
+\Lambda_{\mathrm{boundary}}&&\Lambda_{\mathrm{Pratt}}\\
+\updownarrow&&?\\
+-\zeta'/\zeta&&\text{additional analytic problem.}
+\end{array}}
+\]
+
+\section{Consequences and interpretation}
+
+The preceding results separate three layers that are easy to conflate.
+
+\begin{enumerate}[label=\arabic*.]
+\item \textbf{Recursive geometry.} The predecessor matrix $B$ and Green operator $G=(I-B)^{-1}$ describe recursive factorization paths.
+\item \textbf{Factorization boundary.} Unique factorization gives the root atoms and the Euler product.
+\item \textbf{Asymptotic gauge.} The norm $N$ determines how atoms are ordered and therefore what prime-number law is being asked for.
+\end{enumerate}
+
+The exact chain is therefore
+\[
+\boxed{
+B\longrightarrow G\longrightarrow N
+\longrightarrow
+\zeta_{\cR,N}
+\longrightarrow
+\Lambda_{\cR,N}
+\longrightarrow
+\partial\cO(\cR,N)
+\longrightarrow
+\text{prime-number law}.}
+\]
+The first arrows depend on recursive geometry. The central identity
+\[
+-\frac{\zeta'}{\zeta}
+=\mathcal D(\Lambda)
+\]
+lives on the factorization boundary. The final PNT arrow requires either analytic continuation/Tauberian input or, in lattice systems such as $\FF_q[x]$, coefficient extraction and M\"obius inversion.
+
+A useful slogan is therefore:
+\[
+\boxed{
+\text{The RRFS zeta and the boundary OS PNT are two descriptions of the same primitive boundary distribution.}}
+\]
+This statement is exact once ``primitive'' is understood in the boundary M\"obius sense. It is not automatically true for a Pratt-coordinate primitive distribution.
+
+\section{Open problems}
+
+\begin{problem}[Boundary--Pratt comparison]
+Characterize normed RRFS for which
+\[
+\Lambda^{\mathrm{Pratt}}_{\cR,N}
+=\Lambda_{\cR,N},
+\]
+or more weakly for which the two functions have the same summatory asymptotic.
+\end{problem}
+
+\begin{problem}[Green criterion for a PNT]
+Find conditions stated directly in terms of $(B,\varepsilon)$ that imply analytic continuation and boundary regularity of
+\[
+\zeta_{\cR,\varepsilon}(s)
+=\sum_h\exp\!\left(-s\varepsilon^{\mathsf T}Gv(h)\right),
+\]
+strong enough to deduce a prime-number law for the boundary OS.
+\end{problem}
+
+\begin{problem}[Nontrivial symmetry realization]
+The canonical boundary OS uses trivial symmetry groups. Determine when the primitive mass
+\[
+\Lambda_{\cR,N}(\alpha^m)=\log N(\alpha)
+\]
+admits an intrinsic finite measured orbit model compatible with additional geometry of the RRFS.
+\end{problem}
+
+\begin{problem}[Lattice versus nonlattice transfer]
+Develop a unified theorem covering both continuous norm spectra, where Mellin--Tauberian methods are natural, and lattice spectra such as $q^{\NN}$, where generating functions and coefficient extraction are more precise.
+\end{problem}
+
+\section{Conclusion}
+
+A properly normed RRFS canonically determines an Orbit System on its ordinary factorization boundary. The construction is elementary but structurally decisive. The total layer mass is $\log N$. Divisibility M\"obius inversion converts this into the boundary von Mangoldt function, supported exactly on atom powers. The free layer construction realizes these primitive masses as an Orbit System. Finally, the logarithmic derivative of the RRFS zeta is exactly the Dirichlet transform of those OS primitive masses.
+
+Thus the familiar analytic sequence
+\[
+\text{Euler product}
+\longrightarrow
+-\zeta'/\zeta
+\longrightarrow
+\Psi
+\longrightarrow
+\mathrm{PNT}
+\]
+is not external to the RRFS/OS framework. It is the canonical passage from recursive geometry, through a normed factorial boundary, to a primitive measured Orbit System. What remains genuinely new and open is to understand when the \emph{recursive} Pratt OS shares the same analytic transform, and when the Green operator itself predicts the singularities that drive the prime-number law.
+
+\begin{thebibliography}{9}
+
+\bibitem{LekaRRFS}
+O. Leka,
+\emph{Recursive Factorization Systems and Pratt Forests}, preprint, 2026.
+
+\bibitem{LekaGreen}
+O. Leka,
+\emph{Green Operators and Zeta Functions of Recursive Factorization Systems: From Pratt Geometry to Euler Products}, preprint, 2026.
+
+\bibitem{LekaOrbit}
+O. Leka,
+\emph{Orbit Systems: Products, Geometric Families, and Pratt Layers}, preprint, 2026.
+
+\bibitem{Tenenbaum}
+G. Tenenbaum,
+\emph{Introduction to Analytic and Probabilistic Number Theory},
+3rd ed., Graduate Studies in Mathematics 163, AMS, 2015.
+
+\bibitem{Rosen}
+M. Rosen,
+\emph{Number Theory in Function Fields},
+Graduate Texts in Mathematics 210, Springer, 2002.
+
+\bibitem{Neukirch}
+J. Neukirch,
+\emph{Algebraic Number Theory},
+Grundlehren der mathematischen Wissenschaften 322, Springer, 1999.
+
+\end{thebibliography}
+
+\end{document}
