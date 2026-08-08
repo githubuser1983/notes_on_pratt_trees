@@ -1,0 +1,731 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\cR}{\mathfrak R}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cO}{\mathcal O}
+\newcommand{\fr}{\mathrm{fr}}
+\newcommand{\bd}{\partial}
+\newcommand{\Lam}{\Lambda}
+\newcommand{\Mob}{\mu}
+\newcommand{\Div}{\mid}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\title{\textbf{The Front--Boundary Commutation Theorem}\\
+\large Front Polynomials, Boundary Orbit Systems, Zeta Functions, and Prime-Number Laws}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A front-faithful ranked recursive factorization system (RRFS) admits a polynomial front lift which preserves its factorial exponent data. Independently, a properly normed RRFS admits a canonical boundary Orbit System obtained by divisibility M\"obius inversion of the logarithmic norm. We prove that these two constructions commute. More precisely, if $\Phi_{\fr}:h\mapsto F_h(T)$ is the front lift and the norm is transported by
+\[
+N_{\fr}(\Phi_{\fr}(h))=N(h),
+\]
+then $\Phi_{\fr}$ induces an isomorphism of normed divisibility posets and a measure-preserving isomorphism
+\[
+\bd\cO(\cR,N)\cong \bd\cO(\cR_{\fr},N_{\fr}).
+\]
+Boundary M\"obius functions, von Mangoldt masses, total layer masses, gauges, Chebyshev functions, and zeta logarithmic derivatives are preserved exactly. If the front polynomial is evaluation-compatible, $F_\alpha(u)=N(\alpha)$, the transported norm is simply evaluation at $u$, so the original and front-lift zeta functions and their boundary prime-number laws coincide term by term. We also explain the precise obstruction: front splitting or front collisions destroy the atomwise boundary identification. Examples include the numerical Pratt RRFS, chain and cyclotomic front-faithful systems, a minimal splitting system, finite-field polynomial RRFS, and ideal-Pratt systems over Dedekind domains.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+
+Two constructions attached to an RRFS encode different aspects of the same recursive arithmetic object.
+
+The \emph{front construction} begins with complete node fronts of the recursive forest and associates to every object $h$ a terminal-front polynomial $F_h(T)$. In a front-faithful RRFS the atomic front polynomials are irreducible and pairwise nonassociate, and the map
+\[
+\Phi_{\fr}:H\longrightarrow H_{\fr},\qquad h\longmapsto F_h(T)
+\]
+is a factorization-preserving monoid isomorphism onto the front monoid. The front lift has the same transition matrix $B$ and therefore the same Green operator $(I-B)^{-1}$.
+
+The \emph{boundary construction} forgets the recursive order and retains ordinary divisibility in the factorial monoid. For a proper multiplicative norm $N$, divisibility M\"obius inversion of
+\[
+F(h)=\log N(h)
+\]
+produces the boundary von Mangoldt mass, supported exactly on atom powers. The free lower-layer realization then gives the canonical boundary Orbit System.
+
+The purpose of this note is to prove that, when the front lift is faithful, these constructions commute. The central diagram is
+\[
+\boxed{
+\begin{array}{ccc}
+(\cR,N)&\xrightarrow{\ \Phi_{\fr}\ }&(\cR_{\fr},N_{\fr})\\[2mm]
+\downarrow\,\bd\cO&&\downarrow\,\bd\cO\\[2mm]
+\bd\cO(\cR,N)&\xrightarrow{\ \cong\ }&
+\bd\cO(\cR_{\fr},N_{\fr}).
+\end{array}}
+\]
+If evaluation compatibility holds at $u>1$, then $N_{\fr}(P)=P(u)$ and the same diagram simultaneously preserves the RRFS zeta function, its logarithmic derivative, the boundary Chebyshev function, and every prime-number asymptotic derived from them.
+
+The theorem also isolates the failure modes. Front splitting replaces one original atom by several polynomial factors; a front collision identifies distinct original atoms. Either phenomenon can change the divisibility boundary and therefore its M\"obius primitive distribution.
+
+\section{RRFS, front polynomials, and the front lift}
+
+Let
+\[
+\cR=(H,\cA,D,\rho)
+\]
+be an RRFS: $H$ is a reduced free commutative factorial monoid with atom set $\cA$, and
+\[
+h=\prod_{\alpha\in\cA}\alpha^{v_\alpha(h)}
+\]
+with finite support. The predecessor $D$ is rank decreasing on atoms.
+
+The complete-front construction associates to each object a polynomial $F_h(T)\in\ZZ[T]$. The structural multiplicativity is
+\begin{equation}\label{eq:frontmult}
+F_h(T)=\prod_{\alpha\in\cA}F_\alpha(T)^{v_\alpha(h)}.
+\end{equation}
+For a nonterminal atom the atomic recursion has the form
+\[
+F_\alpha(T)=1+F_{D\alpha}(T),
+\]
+with the predecessor polynomial interpreted multiplicatively.
+
+\begin{definition}
+The RRFS is \emph{front-stable} if every atomic front polynomial $F_\alpha(T)$ is irreducible in $\ZZ[T]$. It is \emph{front-faithful} if it is front-stable and distinct atoms give nonassociate atomic front polynomials.
+\end{definition}
+
+Assume henceforth, until the obstruction section, that $\cR$ is front-faithful. Let $H_{\fr}$ be the submonoid of $\ZZ[T]\setminus\{0\}$ freely generated by the irreducibles $F_\alpha(T)$.
+
+\begin{theorem}[Front lift]
+The map
+\[
+\Phi_{\fr}:H\to H_{\fr},\qquad h\mapsto F_h(T),
+\]
+is a factorization-preserving monoid isomorphism. The front monoid carries an RRFS structure with
+\[
+D_{\fr}(F_\alpha)=\prod_\beta F_\beta^{B_{\beta,\alpha}},
+\]
+the same transition matrix $B$, and hence the same Green operator.
+\end{theorem}
+
+This is the front-lift theorem from the front-polynomial theory. Equation \eqref{eq:frontmult}, front faithfulness, and unique factorization in $\ZZ[T]$ imply that the exponent vector of $F_h$ is precisely $v(h)$.
+
+\section{Boundary Orbit Systems}
+
+Let $N:H\to\RR_{>0}$ be multiplicative, $N(1)=1$, $N(\alpha)>1$, and proper:
+\[
+\#\{h\in H:N(h)\le X\}<\infty
+\qquad(X>0).
+\]
+The boundary poset is $(H,\Div)$. Since every element has finitely many divisors, it is lower finite.
+
+Define
+\[
+L(h):=\log N(h).
+\]
+The boundary primitive mass is the divisibility M\"obius transform
+\begin{equation}\label{eq:bdmass}
+\Lam_{\bd}(h)
+=
+\sum_{d\Div h}\Mob_H(d,h)\log N(d).
+\end{equation}
+For a factorial monoid,
+\begin{equation}\label{eq:mangoldt}
+\Lam_{\bd}(h)=
+\begin{cases}
+\log N(\alpha),&h=\alpha^m,\ m\ge1,\\
+0,&\text{otherwise},
+\end{cases}
+\end{equation}
+including $\Lam_{\bd}(1)=0$, and
+\begin{equation}\label{eq:inverse}
+\log N(h)=\sum_{d\Div h}\Lam_{\bd}(d).
+\end{equation}
+
+The canonical singleton realization takes
+\[
+E_h=
+\begin{cases}
+\{\ast_h\},&h=\alpha^m,\ m\ge1,\\
+\varnothing,&\text{otherwise},
+\end{cases}
+\qquad
+\mu(E_{\alpha^m})=\log N(\alpha),
+\]
+with trivial symmetry groups, and
+\[
+X_t=\bigsqcup_{d\Div t}E_d.
+\]
+Its total layer mass is $\mu(X_t)=\log N(t)$, and its natural gauge is
+\[
+\nu(\ast_{\alpha^m})=N(\alpha^m).
+\]
+We denote this measured Orbit System by $\bd\cO(\cR,N)$.
+
+\section{The Front--Boundary Commutation Theorem}
+
+The first step is purely order theoretic.
+
+\begin{lemma}[Boundary-poset transport]\label{lem:poset}
+If $\cR$ is front-faithful, then for all $d,h\in H$,
+\[
+d\Div h
+\quad\Longleftrightarrow\quad
+F_d\Div F_h
+\quad\text{in }H_{\fr}.
+\]
+Consequently $\Phi_{\fr}$ is an isomorphism
+\[
+(H,\Div)\cong(H_{\fr},\Div)
+\]
+of lower-finite posets.
+\end{lemma}
+
+\begin{proof}
+Write
+\[
+d=\prod_\alpha\alpha^{a_\alpha},
+\qquad
+h=\prod_\alpha\alpha^{b_\alpha}.
+\]
+Then $d\Div h$ if and only if $a_\alpha\le b_\alpha$ for every $\alpha$. By front multiplicativity,
+\[
+F_d=\prod_\alpha F_\alpha^{a_\alpha},
+\qquad
+F_h=\prod_\alpha F_\alpha^{b_\alpha}.
+\]
+Front faithfulness makes the $F_\alpha$ pairwise nonassociate irreducibles, so unique factorization in $\ZZ[T]$ gives
+\[
+F_d\Div F_h
+\iff
+a_\alpha\le b_\alpha\quad\forall\alpha.
+\]
+Thus divisibility is transported exactly.
+\end{proof}
+
+\begin{corollary}[M\"obius invariance]\label{cor:mobius}
+For $d\Div h$,
+\[
+\Mob_{H_{\fr}}(F_d,F_h)=\Mob_H(d,h).
+\]
+\end{corollary}
+
+\begin{proof}
+The M\"obius function is invariant under poset isomorphism, and Lemma \ref{lem:poset} identifies the intervals $[d,h]$ and $[F_d,F_h]$.
+\end{proof}
+
+We now transport the norm.
+
+\begin{definition}[Transported front norm]\label{def:transport}
+Define
+\[
+N_{\fr}:H_{\fr}\to\RR_{>0},
+\qquad
+N_{\fr}(F_h):=N(h).
+\]
+\end{definition}
+
+This is well defined because $\Phi_{\fr}$ is bijective. It is multiplicative and proper, and
+\[
+N_{\fr}(F_\alpha)>1.
+\]
+
+\begin{theorem}[Front--Boundary Commutation Theorem]\label{thm:main}
+Let $(\cR,N)$ be a properly normed, front-faithful RRFS, and let $(\cR_{\fr},N_{\fr})$ be its front lift equipped with the transported norm of Definition \ref{def:transport}. Then $\Phi_{\fr}$ induces a canonical measure-preserving isomorphism of boundary Orbit Systems
+\[
+\boxed{
+\bd\cO(\cR,N)
+\cong
+\bd\cO(\cR_{\fr},N_{\fr}).}
+\]
+More precisely, for every $h\in H$:
+\begin{enumerate}[label=(\roman*)]
+\item the boundary types correspond by $h\leftrightarrow F_h$;
+\item total layer masses agree:
+\[
+\mu_h(X_h)=\log N(h)
+=\log N_{\fr}(F_h)
+=\mu^{\fr}_{F_h}(X^{\fr}_{F_h});
+\]
+\item primitive masses agree:
+\[
+\boxed{\Lam_{\bd,\fr}(F_h)=\Lam_{\bd}(h);}
+\]
+\item primitive layers correspond by
+\[
+E_{\alpha^m}\longleftrightarrow E^{\fr}_{F_\alpha^m};
+\]
+\item the natural gauges agree:
+\[
+\nu_{\fr}(\ast_{F_\alpha^m})
+=N_{\fr}(F_\alpha^m)
+=N(\alpha^m)
+=\nu(\ast_{\alpha^m}).
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part (i) is Lemma \ref{lem:poset}. For the primitive mass, Corollary \ref{cor:mobius} and norm transport give
+\[
+\begin{aligned}
+\Lam_{\bd,\fr}(F_h)
+&=
+\sum_{P\Div F_h}
+\Mob_{H_{\fr}}(P,F_h)\log N_{\fr}(P)\\
+&=
+\sum_{d\Div h}
+\Mob_{H_{\fr}}(F_d,F_h)\log N_{\fr}(F_d)\\
+&=
+\sum_{d\Div h}
+\Mob_H(d,h)\log N(d)\\
+&=
+\Lam_{\bd}(h).
+\end{aligned}
+\]
+This proves (iii). By the boundary von Mangoldt formula, nonzero primitive layers occur precisely at $\alpha^m$ on the original side and at $F_\alpha^m$ on the front side, with the common mass $\log N(\alpha)$. This gives (iv).
+
+For total layers,
+\[
+\mu^{\fr}_{F_h}(X^{\fr}_{F_h})
+=
+\sum_{F_d\Div F_h}\Lam_{\bd,\fr}(F_d)
+=
+\sum_{d\Div h}\Lam_{\bd}(d)
+=
+\log N(h)
+=
+\log N_{\fr}(F_h),
+\]
+which proves (ii). Finally, the displayed equality of gauges proves (v). The singleton models and trivial symmetry groups are therefore carried to each other type by type, yielding a measure-preserving Orbit-System isomorphism.
+\end{proof}
+
+\begin{remark}
+The theorem is stronger than equality of zeta functions. It identifies the entire normed divisibility incidence structure and hence the M\"obius primitive distribution before any analytic transform is taken.
+\end{remark}
+
+\section{Evaluation compatibility and zeta transfer}
+
+\begin{definition}
+The front construction is \emph{evaluation-compatible} with $N$ at $u>1$ if
+\[
+F_\alpha(u)=N(\alpha)
+\qquad(\alpha\in\cA).
+\]
+Then multiplicativity gives $F_h(u)=N(h)$ for every $h$.
+\end{definition}
+
+On $H_{\fr}$ define the evaluation norm
+\[
+N_{\fr,u}(P)=P(u).
+\]
+Under evaluation compatibility this is exactly the transported norm:
+\[
+N_{\fr,u}(F_h)=F_h(u)=N(h).
+\]
+
+\begin{corollary}[Evaluation form of front--boundary commutation]\label{cor:eval}
+If the hypotheses of Theorem \ref{thm:main} hold and the front construction is evaluation-compatible at $u>1$, then
+\[
+\boxed{
+\bd\cO(\cR,N)
+\cong
+\bd\cO(\cR_{\fr},\operatorname{ev}_u).}
+\]
+\end{corollary}
+
+Assume now that a common half-plane of absolute convergence exists. The zeta functions are
+\[
+\zeta_{\cR,N}(s)=\sum_{h\in H}N(h)^{-s}
+\]
+and
+\[
+\zeta_{\cR_{\fr},u}(s)
+=
+\sum_{P\in H_{\fr}}P(u)^{-s}.
+\]
+
+\begin{theorem}[Zeta and logarithmic-derivative invariance]\label{thm:zeta}
+Under the hypotheses of Corollary \ref{cor:eval},
+\[
+\boxed{
+\zeta_{\cR,N}(s)
+=
+\zeta_{\cR_{\fr},u}(s)}
+\]
+in every common half-plane of convergence. In every open half-plane where the corresponding logarithmic derivatives converge absolutely,
+\[
+\boxed{
+-\frac{\zeta'_{\cR,N}}{\zeta_{\cR,N}}(s)
+=
+-\frac{\zeta'_{\cR_{\fr},u}}{\zeta_{\cR_{\fr},u}}(s).}
+\]
+Moreover these are the same Dirichlet transform under the boundary identification:
+\[
+\sum_{h\in H}\Lam_{\bd}(h)N(h)^{-s}
+=
+\sum_{P\in H_{\fr}}\Lam_{\bd,\fr}(P)P(u)^{-s}.
+\]
+\end{theorem}
+
+\begin{proof}
+The equality $F_h(u)=N(h)$ and bijectivity of $\Phi_{\fr}$ identify the Dirichlet series term by term. The logarithmic-derivative identity follows either by differentiation in an absolute-convergence half-plane or directly from the atom-power expansions. Theorem \ref{thm:main} identifies the coefficients.
+\end{proof}
+
+\section{Chebyshev functions and prime-number laws}
+
+Define
+\[
+\Psi_{\cR,N}(X)
+=
+\sum_{N(h)\le X}\Lam_{\bd}(h)
+=
+\sum_{\substack{\alpha\in\cA,\ m\ge1\\N(\alpha)^m\le X}}
+\log N(\alpha).
+\]
+For the front lift define analogously
+\[
+\Psi_{\fr,u}(X)
+=
+\sum_{P(u)\le X}\Lam_{\bd,\fr}(P).
+\]
+
+\begin{corollary}[Exact Chebyshev invariance]\label{cor:psi}
+Under evaluation compatibility,
+\[
+\boxed{
+\Psi_{\cR,N}(X)=\Psi_{\fr,u}(X)
+\qquad\text{for every }X.}
+\]
+Likewise
+\[
+\vartheta_{\cR,N}(X)=\vartheta_{\fr,u}(X),
+\qquad
+\pi_{\cR,N}(X)=\pi_{\fr,u}(X),
+\]
+where $\pi$ counts the corresponding root atoms.
+\end{corollary}
+
+\begin{proof}
+The front lift gives a norm-preserving bijection
+\[
+\alpha^m\longleftrightarrow F_\alpha^m
+\]
+of primitive boundary types, preserving the weight $\log N(\alpha)$. Restricting to $m=1$ gives the equalities for $\vartheta$ and $\pi$.
+\end{proof}
+
+Thus every weighted boundary PNT transfers without loss:
+\[
+\Psi_{\cR,N}(X)\sim C X^\delta
+\quad\Longleftrightarrow\quad
+\Psi_{\fr,u}(X)\sim C X^\delta.
+\]
+The statement is stronger than asymptotic transfer: the two counting functions are identical.
+
+\section{Positive examples from front-polynomial theory}
+
+\subsection{Natural numbers and Pratt polynomials}
+
+Take
+\[
+H=\NN_{\ge1},\qquad \cA=\{2,3,5,\ldots\},
+\]
+with
+\[
+D(2)=1,\qquad D(p)=p-1\quad(p>2).
+\]
+The front polynomials satisfy
+\[
+F_2(T)=T,
+\qquad
+F_p(T)=1+\prod_{q\mid p-1}F_q(T)^{v_q(p-1)},
+\]
+and
+\[
+F_n(T)=\prod_pF_p(T)^{v_p(n)}.
+\]
+These are the numerical Pratt polynomials $f_n(T)$. The front-polynomial theory uses the irreducibility theorem for $f_p$ and the evaluation identity
+\[
+f_p(2)=p
+\]
+to conclude that the numerical Pratt RRFS is front-faithful and evaluation-compatible with the ordinary norm $N(n)=n$ at $u=2$.
+
+The Front--Boundary Commutation Theorem therefore gives
+\[
+\bd\cO(\NN,N)
+\cong
+\bd\cO(H_{\fr},\operatorname{ev}_2).
+\]
+At primitive types,
+\[
+p^m\longleftrightarrow f_p(T)^m,
+\qquad
+\Lam(p^m)=\Lam_{\fr}(f_p^m)=\log p.
+\]
+Hence
+\[
+\zeta(s)
+=
+\prod_p(1-p^{-s})^{-1}
+=
+\prod_p(1-f_p(2)^{-s})^{-1},
+\]
+and
+\[
+\Psi(X)
+=
+\sum_{p^m\le X}\log p
+=
+\Psi_{\fr,2}(X).
+\]
+Thus the classical weighted PNT $\Psi(X)\sim X$ is literally the same boundary primitive-mass law on the original and front sides.
+
+\subsection{Chains}
+
+Let $\alpha_0$ be terminal and
+\[
+D\alpha_0=1,\qquad D\alpha_j=\alpha_{j-1}.
+\]
+Then
+\[
+F_{\alpha_0}(T)=T,\qquad
+F_{\alpha_j}(T)=T+j.
+\]
+The atomic front polynomials are distinct linear irreducibles, so the chain is front-faithful. For any proper multiplicative norm on the original free monoid, the transported front norm makes Theorem \ref{thm:main} apply. If one chooses a value $u>1$ and defines
+\[
+N(\alpha_j)=u+j,
+\]
+then evaluation compatibility holds and
+\[
+\Lam(\alpha_j^m)=\log(u+j)
+=
+\Lam_{\fr}((T+j)^m).
+\]
+This example shows that the commutation theorem is not specific to arithmetic primes.
+
+\subsection{Cyclotomic stars}
+
+Let $\tau$ be terminal and let $\alpha_r$ satisfy
+\[
+D\alpha_r=\tau^{2^r}.
+\]
+Then
+\[
+F_{\alpha_r}(T)=1+T^{2^r}
+=\Phi_{2^{r+1}}(T),
+\]
+which is cyclotomic and irreducible. Taking one atom for each such exponent yields a front-faithful family. The boundary theorem transports every proper norm to the polynomial front monoid. If the norm is chosen by evaluation,
+\[
+N(\tau)=u,\qquad
+N(\alpha_r)=1+u^{2^r},
+\]
+then the original and front boundary Orbit Systems, zetas, and primitive mass functions coincide.
+
+\section{Failure modes: splitting and collisions}
+
+The theorem requires front faithfulness for a structural reason, not merely for convenience.
+
+\subsection{Minimal splitting}
+
+Let $\tau$ be terminal and
+\[
+D\alpha=\tau^3.
+\]
+Then
+\[
+F_\alpha(T)=1+T^3=(T+1)(T^2-T+1).
+\]
+Thus one original atom $\alpha$ splits into two polynomial irreducibles. The map $h\mapsto F_h$ no longer identifies the original free atom set with the irreducible atom set of the polynomial image. In particular, declaring the irreducible factors of $F_\alpha$ to be new RRFS atoms is an additional construction; a canonical predecessor on those factors is not supplied by the front polynomial alone.
+
+From the boundary viewpoint this is exactly the obstruction: the original primitive type $\alpha^m$ has no single corresponding polynomial atom power. Hence there is no canonical atomwise equality
+\[
+\Lam_{\bd,\fr}(F_h)=\Lam_{\bd}(h)
+\]
+for a front RRFS built from the new irreducible factors.
+
+\subsection{Finite-field polynomial RRFS}
+
+Let
+\[
+H_q=\FF_q[x]_{\mathrm{monic}}
+\]
+with monic irreducibles as atoms, $x$ terminal, and for an irreducible $\phi\ne x$ use the polynomial predecessor obtained from $\phi-\phi(0)$. The degree norm is
+\[
+N_q(f)=q^{\deg f}.
+\]
+On the original RRFS the Green energy collapses to the terminal coordinate:
+\[
+\log N_q(f)=(\log q)\deg f,
+\]
+and the zeta function is
+\[
+\zeta_{q}(s)
+=
+\sum_{f\ \mathrm{monic}}q^{-s\deg f}
+=
+\frac{1}{1-q^{1-s}}.
+\]
+Consequently the original boundary OS has
+\[
+\Lam_q(f)=
+\begin{cases}
+(\deg P)\log q,&f=P^m,\ P\text{ irreducible},\\
+0,&\text{otherwise}.
+\end{cases}
+\]
+
+The front-polynomial paper exhibits explicit examples over $\FF_3[x]$ in which an irreducible polynomial atom has a reducible terminal-front polynomial. Hence the finite-field polynomial RRFS is front-splitting in general. The hypotheses of Theorem \ref{thm:main} fail, so the affine-line zeta and its boundary OS do \emph{not} automatically transfer to a polynomial front lift.
+
+This contrast is useful: the original boundary theorem remains valid because $\FF_q[x]_{\mathrm{monic}}$ is factorial and the degree norm is proper, while front--boundary commutation can fail because the front transform need not preserve the atom boundary.
+
+\section{Dedekind ideals: zeta preservation does not imply front faithfulness}
+
+Let $K$ be a number field and let $H$ be the monoid of nonzero ideals of $\mathcal O_K$, with prime ideals as atoms and ideal norm $N\mathfrak a$. The ideal-Pratt predecessor is obtained by lifting the numerical Pratt predecessor:
+\[
+D_K(\mathfrak p)=(p-1)\mathcal O_K,
+\]
+where $p$ is the rational prime below $\mathfrak p$.
+
+The Green-zeta theory gives
+\[
+\zeta_{\cR_K,N}(s)
+=
+\sum_{\mathfrak a\ne0}(N\mathfrak a)^{-s}
+=
+\zeta_K(s),
+\]
+and ordinary prime-ideal factorization gives the Euler product. Therefore the boundary construction applies directly:
+\[
+\Lam_K(\mathfrak a)=
+\begin{cases}
+\log N\mathfrak p,&\mathfrak a=\mathfrak p^m,\\
+0,&\text{otherwise}.
+\end{cases}
+\]
+Thus $-\zeta_K'/\zeta_K$ is the transform of the primitive mass of the ideal boundary OS.
+
+The front-polynomial analysis, however, shows that ideal-Pratt systems can be front-splitting or non-faithful. This gives an important distinction:
+\[
+\boxed{
+\text{having the correct Dedekind zeta does not imply front--boundary commutation}.}
+\]
+Zeta depends on the factorial boundary and norm; front commutation additionally requires the front transform to preserve the atom boundary.
+
+\subsection{Gaussian integer example}
+
+For $K=\mathbb Q(i)$, write
+\[
+\mathfrak p_2=(1+i),\qquad \mathfrak p_3=(3).
+\]
+The prime $2$ ramifies, $3$ is inert, and $13$ splits. If $\mathfrak p_{13}$ is a prime above $13$, then
+\[
+D_K(\mathfrak p_{13})=(12)
+=\mathfrak p_2^4\mathfrak p_3,
+\qquad
+D_K(\mathfrak p_3)=(2)=\mathfrak p_2^2,
+\qquad
+D_K(\mathfrak p_2)=\mathcal O_K.
+\]
+The Green population rooted at $\mathfrak p_{13}$ has multiplicities
+\[
+M_{\mathfrak p_{13}}=1,\qquad
+M_{\mathfrak p_3}=1,\qquad
+M_{\mathfrak p_2}=6,
+\]
+and the local energies telescope to $\log13$. This illustrates how rich recursive Green geometry can coexist with the ordinary prime-ideal boundary that controls $\zeta_K$.
+
+If the associated atomic front polynomial splits, the recursive front representation cannot be substituted for the prime-ideal boundary in the commutation theorem. The boundary OS nevertheless remains perfectly well defined and continues to encode the logarithmic derivative of $\zeta_K$.
+
+\section{Conceptual consequences}
+
+The results separate three increasingly strong preservation statements.
+
+\begin{proposition}
+For a front-faithful RRFS:
+\begin{enumerate}[label=(\arabic*)]
+\item front faithfulness implies preservation of the factorial boundary:
+\[
+(H,\Div)\cong(H_{\fr},\Div);
+\]
+\item adding a transported proper norm implies preservation of the measured boundary Orbit System:
+\[
+\bd\cO(\cR,N)\cong\bd\cO(\cR_{\fr},N_{\fr});
+\]
+\item adding evaluation compatibility implies simultaneous preservation of the boundary OS, zeta function, logarithmic derivative, Chebyshev functions, and prime-number laws.
+\end{enumerate}
+\end{proposition}
+
+Thus front faithfulness has a precise boundary interpretation: it is exactly the condition ensuring that the one-variable terminal-front transformation neither splits nor merges the factorial root atoms.
+
+The full chain may be displayed as
+\[
+\boxed{
+\begin{array}{ccccc}
+B&\longrightarrow&G&\longrightarrow&N\\
+\downarrow&&\Vert&&\downarrow\\
+B_{\fr}&\longrightarrow&G_{\fr}&\longrightarrow&N_{\fr}\\[1mm]
+&&&&\downarrow\\
+&&&&(H_{\fr},\Div)\\
+&&&&\downarrow\,\Mob\\
+&&&&\Lam_{\bd,\fr}\\
+&&&&\downarrow\\
+&&&&\bd\cO(\cR_{\fr},N_{\fr}),
+\end{array}}
+\]
+while the original side gives the same boundary object under $\Phi_{\fr}$. Under evaluation compatibility, the analytic continuation is
+\[
+\zeta_{\cR,N}
+=
+\zeta_{\cR_{\fr},u},
+\qquad
+-\frac{\zeta'_{\cR,N}}{\zeta_{\cR,N}}
+=
+-\frac{\zeta'_{\cR_{\fr},u}}{\zeta_{\cR_{\fr},u}},
+\qquad
+\Psi_{\cR,N}=\Psi_{\cR_{\fr},u}.
+\]
+
+\section{Further questions}
+
+The theorem suggests several natural problems.
+
+\begin{enumerate}
+\item \textbf{Splitting correction.} When $F_\alpha$ factors, can one define a canonical refinement of the boundary OS which records the splitting defect while retaining a pushforward to the original boundary mass?
+
+\item \textbf{Collision quotient.} If distinct atoms have the same front polynomial, can the front boundary be interpreted as a quotient of the original boundary poset, and how does incidence M\"obius inversion behave under that quotient?
+
+\item \textbf{Approximate evaluation compatibility.} If $F_\alpha(u)$ and $N(\alpha)$ are not equal but have controlled logarithmic discrepancy, under what hypotheses do the two boundary Chebyshev functions have the same asymptotic?
+
+\item \textbf{Dedekind front splitting.} Relate factorization of ideal-Pratt front polynomials to splitting and ramification data of prime ideals, and determine when a number field admits a front-faithful ideal sub-RRFS.
+
+\item \textbf{Boundary--Pratt--front triangle.} The front lift preserves $B$ and $G$ under front faithfulness, while the theorem above preserves the divisibility boundary. Determine when the corresponding Pratt M\"obius mass is also preserved and how it compares with the boundary mass on both sides.
+\end{enumerate}
+
+\section{Conclusion}
+
+A front-faithful RRFS and its front-polynomial lift have not merely the same recursive transition matrix. They have the same factorial boundary. Once a norm is transported across the front lift, divisibility M\"obius inversion is invariant, so the canonical boundary Orbit Systems are measure-preservingly isomorphic. Under evaluation compatibility this becomes an exact analytic equivalence: zeta functions, logarithmic derivatives, boundary von Mangoldt masses, Chebyshev functions, and prime-number laws coincide.
+
+The result can be summarized by the slogan
+\[
+\boxed{
+\text{front faithfulness preserves the boundary, and evaluation compatibility preserves its arithmetic scale}.}
+\]
+The numerical Pratt system realizes the theorem perfectly. Finite-field and Dedekind examples show equally clearly why the hypotheses matter: the boundary zeta may remain canonical even when the front transform splits or merges its atoms.
+
+\section*{Source note}
+
+This note is derived from and combines two previously developed pieces of the RRFS framework: the front-polynomial results (complete node fronts, front faithfulness, the front lift, evaluation compatibility, and the worked front examples) and the boundary/zeta results (divisibility M\"obius inversion, boundary von Mangoldt mass, canonical boundary Orbit Systems, and zeta/prime-number laws). The Front--Boundary Commutation Theorem and its proof are the new synthesis established here.
+
+\end{document}
