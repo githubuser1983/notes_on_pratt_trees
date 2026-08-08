@@ -1,0 +1,478 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,longtable,tabularx,array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cR}{\mathfrak R}
+\newcommand{\cO}{\mathfrak O}
+\newcommand{\cF}{\mathcal F}
+\newcommand{\Gr}{\operatorname{Gr}}
+\newcommand{\rad}{\operatorname{rad}}
+\newcommand{\Li}{\operatorname{Li}}
+\title{\textbf{Classical Antecedents and the RRFS--Orbit-System Program}\\[0.35em]
+\large A Comparative Survey of Beurling, Knopfmacher, Pratt, Ionescu, Incidence Theory, Prime-Orbit Theory, and the 2026 Pratt-Tree Manuscripts}
+\author{Orges Leka}
+\date{August 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This survey compares a corpus of 2026 manuscripts on ranked recursive factorization systems (RRFS), Orbit Systems (OS), Pratt coordinates, front polynomials, Green operators, and related constructions with their closest classical and modern antecedents. The purpose is bibliographic and conceptual rather than theorem-producing. The main conclusion is a separation of layers. The ordinary factorial boundary equipped with a norm, its Euler product, generalized von Mangoldt function, and abstract prime-number theorem belong to a well-established line running from Beurling generalized primes to Knopfmacher's abstract analytic number theory. Likewise, Moebius inversion on posets, primitive-orbit extraction, necklace/Witt theory, dynamical zeta functions, and prime-orbit theorems have substantial classical literatures. Pratt trees and prime chains are classical, and Ionescu explicitly introduced a partial order on primes based on $q\mid p-1$ and connected it with rooted trees and a proposed route toward the PNT.
+
+The additional layer in the manuscript corpus is different: a factorial monoid is equipped with a rank-decreasing predecessor on its atoms, producing a transition matrix $B$, recursive coordinates $M=(I-B)^{-1}v$, and a Green operator $G=(I-B)^{-1}$. The Orbit-System manuscripts separately axiomatize measured incidence layers, primitive extraction, finite symmetry quotients, and a proper counting gauge. The survey therefore recommends locating originality, if any, not in the abstract Euler-product/PNT mechanism itself, but in the systematic interaction among predecessor geometry, Green coordinates, Pratt-order Moebius inversion, front-polynomial realizations, and the OS formalism. No priority claim is made: failure to locate an identical framework is not evidence that none exists.
+\end{abstract}
+
+\tableofcontents
+
+\section{Scope, corpus, and method}
+The material reviewed here is the complete manuscript collection supplied in the accompanying archive. The comparison is deliberately narrow: it asks which parts of the terminology and theorem pattern have close precedents in the classical literature, which parts are reformulations of established mechanisms, and which parts add structural data not present in the closest precedents. It does not attempt to certify novelty.
+
+The corpus consists of the foundational RRFS manuscript \cite{LekaRRFS}, the categorical RRFS manuscript \cite{LekaCategory}, the Green--zeta manuscript \cite{LekaGreen}, the Orbit-System manuscript \cite{LekaOS}, the boundary transfer note \cite{LekaBoundary}, the front-polynomial manuscript \cite{LekaFront}, the front--boundary commutation note \cite{LekaCommute}, the complete-front probability manuscript \cite{LekaFrontProb}, the Pratt-coordinate manuscript \cite{LekaCoordinates}, the Hadamard--Pratt manuscript and its multiplication table \cite{LekaHadamard,LekaTable}, the root-label-field manuscript \cite{LekaFields}, and the symmetric three-radical Pratt--Mason note \cite{LekaMason}. The archive README was also used as a guide to the intended relationships among these notes \cite{LekaREADME}.
+
+Two caveats are important. First, several manuscripts explicitly describe themselves as drafts, living notes, syntheses, computationally audited notes, or exploratory constructions. The present survey preserves that status. Second, phrases such as ``distinctive'' or ``not located in the searched literature'' are comparative statements, not claims of mathematical priority.
+
+\section{A three-layer decomposition of the program}
+The literature comparison becomes much clearer if the corpus is split into three layers.
+
+\subsection{Factorization boundary}
+At the boundary one has a reduced factorial commutative monoid $H$, its atoms $\cA$, and a multiplicative norm $N$. Unique factorization yields
+\[
+ h=\prod_{\alpha\in\cA}\alpha^{v_\alpha(h)},\qquad
+ \zeta_{H,N}(s)=\prod_{\alpha\in\cA}(1-N(\alpha)^{-s})^{-1}.
+\]
+Logarithmic differentiation isolates atom powers through the generalized von Mangoldt weight
+\[
+ \Lambda_{H,N}(h)=
+ \begin{cases}
+ \log N(\alpha),&h=\alpha^m,\ m\ge1,\\
+ 0,&\text{otherwise}.
+ \end{cases}
+\]
+This layer is strongly classical; it is the natural meeting point with Beurling and Knopfmacher.
+
+\subsection{Recursive predecessor geometry}
+An RRFS adds a predecessor map on atoms and a rank:
+\[
+ \cR=(H,\cA,D,\rho),\qquad
+ \beta\mid D\alpha\Longrightarrow \rho(\beta)<\rho(\alpha).
+\]
+Writing
+\[
+ D\alpha=\prod_\beta \beta^{B_{\beta,\alpha}},
+\]
+the corpus defines recursive multiplicities by
+\[
+ M=v+BM,\qquad M=(I-B)^{-1}v,
+\]
+and calls
+\[
+ G=(I-B)^{-1}
+\]
+the Green operator. It also proves telescoping reconstruction
+\[
+ h=\prod_{\alpha\in\cA}\left(\frac{\alpha}{D\alpha}\right)^{M_\alpha(h)}.
+\]
+This is the layer that has no direct analogue in Beurling's or Knopfmacher's basic setup.
+
+\subsection{Incidence, primitive extraction, quotient, and gauge}
+The Orbit-System formalism uses a type poset $P$, measured layers $X_t$, primitive models $E_t$, finite group actions $G_t\curvearrowright E_t$, and a proper gauge $\nu$. In schematic form,
+\[
+ \text{total layer}\longrightarrow \text{primitive layer}\longrightarrow
+ \text{orbit quotient}\longrightarrow\text{counting law}.
+\]
+The individual operations are classical in incidence algebra, Burnside/P\'olya theory, necklaces, and dynamics. The OS proposal packages them as independent axes and allows a type poset other than ordinary divisibility.
+
+\section{Beurling generalized primes}
+\subsection{Classical setup}
+Beurling's 1937 theory replaces the ordinary primes by an arbitrary nondecreasing unbounded sequence
+\[
+ 1<p_1\le p_2\le\cdots,
+\]
+and forms the multiplicative semigroup of generalized integers \cite{Beurling1937}. The central objects are the generalized prime counting function, generalized integer counting function, and a zeta function built from the generalized prime system. The question is how much of ordinary prime-number theory follows from sufficiently regular growth of the generalized integers. Nyman, Diamond, and later authors sharpened the hypotheses under which a Beurling PNT holds \cite{Nyman1949,Diamond1969,DiamondZhang2016}. Modern work emphasizes that equivalences familiar from ordinary prime number theory can fail for generalized number systems unless extra hypotheses are imposed \cite{DebruyneVindas2016}.
+
+\subsection{Comparison with RRFS and OS}
+The Beurling system already contains the analytic skeleton
+\[
+ \text{generalized atoms}\to\text{multiplicative semigroup}\to\zeta\to\text{PNT}.
+\]
+Therefore a claim that ``a normed abstract prime system has a zeta function whose analytic behavior controls a prime-number law'' is not new in itself. The RRFS corpus adds a separate recursive dependence relation among atoms. Beurling primes are specified by their sizes and multiplicative generation; they do not come with a rank-decreasing predecessor $D\alpha$, a recursive transition matrix $B$, or Green coordinates $M=Gv$.
+
+The OS formalism is also broader in a different direction. Its atoms need not be multiplicative primes at all; they may be primitive necklaces, periodic orbits, Jordan orbit classes, or Grassmann orbit classes. Thus Beurling is a close antecedent for the \emph{analytic boundary}, not for the full OS abstraction.
+
+\section{Knopfmacher's abstract analytic number theory}
+\subsection{Arithmetical semigroups}
+John Knopfmacher's \emph{Abstract Analytic Number Theory} systematically studies arithmetical semigroups, their zeta functions, arithmetical functions, asymptotic enumeration, and an abstract prime-number theorem \cite{Knopfmacher1975}. Chapter 6 is explicitly titled ``The Abstract Prime Number Theorem'' and proves a PNT under an Axiom A controlling the counting function of generalized integers. Earlier papers developed analytic number theory for finite rings, algebras, modules over Dedekind domains, relative enumeration and $L$-series \cite{Knopfmacher1972a,Knopfmacher1972b,Knopfmacher1973,Knopfmacher1974a}. Particularly relevant to the categorical RRFS manuscript is Knopfmacher's paper on ``Categories and relative analytic number theory'' \cite{Knopfmacher1974b}. His later book on algebraic function fields and the book with W.-B. Zhang on number theory arising from finite fields extend the same program \cite{Knopfmacher1979,KnopfmacherZhang2001}.
+
+At the level needed here, an arithmetical semigroup has exactly the feature that matters for the boundary theory: unique factorization into abstract primes together with a size/degree structure suitable for enumeration. Consequently the following items in the corpus have very close classical antecedents:
+\begin{itemize}
+\item the Euler product of a normed factorial monoid;
+\item the generalized von Mangoldt function supported on powers of one atom;
+\item Chebyshev-type weighted counting;
+\item abstract PNTs obtained from hypotheses on generalized integer counting or zeta functions;
+\item finite-field and Dedekind-domain examples as instances of abstract analytic enumeration.
+\end{itemize}
+
+\subsection{What RRFS adds}
+The essential difference is that Knopfmacher's abstract analytic theory begins, for present purposes, after the factorization boundary has been specified. The RRFS manuscripts place another structure behind it:
+\[
+ D\quad\rightsquigarrow\quad B\quad\rightsquigarrow\quad
+ G=(I-B)^{-1}\quad\rightsquigarrow\quad M=Gv.
+\]
+This predecessor geometry refines the same atom set without changing its ordinary unique factorization. The Green--zeta manuscript then transports a local recursive energy $\varepsilon$ to root energies
+\[
+ c=G^{\mathsf T}\varepsilon,
+\]
+and hence to a norm
+\[
+ N_\varepsilon(h)=\exp\bigl(\varepsilon^{\mathsf T}Gv(h)\bigr).
+\]
+Only after this transport does the familiar Knopfmacher-style Euler product appear. The safest historical description is therefore:
+\[
+ \boxed{\text{RRFS recursive geometry}\longrightarrow
+ \text{classical abstract analytic boundary}.}
+\]
+
+\subsection{The boundary-OS note in this light}
+The corrected boundary note \cite{LekaBoundary} proves that Moebius inversion of $\log N$ on the divisibility poset yields the generalized von Mangoldt mass and realizes that mass as a singleton measured Orbit System. Mathematically, the formula
+\[
+ \log N\overset{\mu_{(H,\mid)}}{\longmapsto}\Lambda_{H,N},
+ \qquad
+ -\frac{\zeta'}{\zeta}(s)=\sum_h\Lambda_{H,N}(h)N(h)^{-s}
+\]
+belongs squarely to classical abstract analytic number theory. What the note contributes as a reformulation is the identification of this boundary transform with a particular OS construction and the explicit separation from the Pratt-order OS. A publication should state this distinction plainly rather than present the boundary zeta/PNT mechanism as new.
+
+\section{Pratt trees, prime chains, and Ionescu's prime poset}
+\subsection{Pratt and prime chains}
+Pratt's primality certificates organize a prime $p$ through the prime factors of $p-1$ \cite{Pratt1975}. The resulting rooted tree is now standard. Ford, Konyagin, and Luca study prime chains
+\[
+ p_1\prec p_2\prec\cdots,\qquad p_j\mid p_{j+1}-1,
+\]
+and quantitative properties of Pratt trees, including their height and branching behavior \cite{FordKonyaginLuca2010}.
+
+Thus the basic edge relation
+\[
+ q\to p\quad\Longleftrightarrow\quad q\mid p-1
+\]
+and the associated tree are classical. What the RRFS formalism does is to make the same mechanism one instance of an atom-predecessor axiom and to retain multiplicities through
+\[
+ B_{q,p}=v_q(p-1).
+\]
+
+\subsection{Ionescu's partial order}
+Ionescu's 2015 paper is especially close to the Pratt-order side of the corpus \cite{Ionescu2015}. He defines a natural partial order on primes based on divisibility of $p-1$, relates primes to rooted trees and a rooted-tree Hopf-algebra viewpoint, discusses gradings, and explicitly presents the structure as a possible alternative route toward understanding the PNT. His 2022 note returns to the prime poset and tentatively connects it with the Riemann spectrum, adelic characters, and Fourier series along Pratt trees \cite{Ionescu2022}.
+
+The comparison should be precise. Ionescu already has
+\[
+ \text{prime poset}\leftrightarrow\text{Pratt/rooted trees}\leftrightarrow
+ \text{possible PNT structure}.
+\]
+The 2026 corpus goes in a different direction by extending from the prime set to arbitrary factorial monoids and by introducing explicit linear-algebraic coordinates. In RRFS language, the prime relation is not merely an order relation: the full predecessor factorization is recorded by a matrix $B$, multiplicities propagate through $G=(I-B)^{-1}$, and every object in the ambient monoid has a recursive coordinate vector $M(h)$. The OS manuscript then defines an order on \emph{all} RRFS objects by
+\[
+ a\preceq_{\cR} b\quad\Longleftrightarrow\quad
+ M_\alpha(a)\le M_\alpha(b)\ \text{for every }\alpha.
+\]
+This is not the same object as Ionescu's prime-only poset, although the numerical Pratt system is a common source.
+
+Equally important, Ionescu's PNT discussion is exploratory rather than a proof of the classical PNT from the poset. The corpus should therefore cite it as a close conceptual antecedent, not as a theorem already identical to the Pratt-OS program.
+
+\section{Incidence algebras, Moebius categories, and decomposition spaces}
+Rota's foundational paper places Moebius inversion on locally finite posets in a general incidence-algebra framework \cite{Rota1964}. Leroux's Moebius categories generalize the same principle from posets to categories \cite{Leroux1975}. Much more recently, G\'alvez-Carrillo, Kock, and Tonks developed decomposition spaces as a broad homotopy-theoretic framework for incidence coalgebras and Moebius inversion, explicitly encompassing and extending earlier Moebius-category ideas \cite{GKT1,GKT2,GKT3}.
+
+This literature is the natural home of OS2, the primitive-extraction axiom. Whenever an OS has
+\[
+ F(t)=\sum_{s\preceq t}P_0(s),
+\]
+the inversion
+\[
+ P_0(t)=\sum_{s\preceq t}\mu_P(s,t)F(s)
+\]
+is classical incidence algebra. Hence the novelty of OS cannot lie in Moebius inversion itself. The proposed distinction is organizational: OS deliberately places incidence inversion beside, but does not identify it with, the subsequent finite-group quotient and the asymptotic gauge.
+
+A related point matters for the categorical RRFS paper. Knopfmacher already used categories in abstract analytic number theory, while Leroux and decomposition-space theory provide categorical environments for decomposition and Moebius inversion. The RRFS category is therefore best distinguished by the kind of structure its morphisms are required to preserve: not merely decomposition or unique factorization, but the rank-decreasing predecessor data and the resulting transition/Green/forest/front structures.
+
+\section{Necklaces, Burnside/Witt theory, and primitive quotienting}
+Metropolis and Rota's necklace algebra and Witt-vector work, and Dress--Siebeneicher's Burnside-ring interpretation of Witt vectors, show that passage between fixed-point or ``ghost'' data and primitive orbit data has a deep classical algebraic theory \cite{MetropolisRota1983,DressSiebeneicher1988}. The familiar necklace polynomial
+\[
+ M_n(q)=\frac1n\sum_{d\mid n}\mu(d)q^{n/d}
+\]
+is also the count of monic irreducible polynomials of degree $n$ over $\FF_q$. Thus the numerical identity appearing in the finite-field and necklace examples of the OS manuscript is classical.
+
+The OS formulation is nevertheless useful as a comparison language because it keeps separate three operations that the classical examples may package differently:
+\[
+ \text{incidence inversion}\neq\text{symmetry quotient}\neq\text{choice of gauge}.
+\]
+This separation is the main conceptual claim that should be emphasized, rather than the individual necklace or finite-field formulas.
+
+\section{Dynamical zeta functions and prime-orbit theorems}
+Artin and Mazur initiated the systematic use of zeta functions for periodic points \cite{ArtinMazur1965}. In hyperbolic dynamics, Parry and Pollicott develop zeta functions and prime-orbit theorems in which primitive closed orbits play the role of primes \cite{ParryPollicott1990}. Ihara-type graph zeta functions supply another mature setting in which primitive cycles are encoded by an Euler product and a graph-theoretic prime-number theorem; Terras gives a standard exposition \cite{Terras2010}.
+
+Structurally, this literature already realizes
+\[
+ \text{total/fixed data}\to\text{exact period}\to\text{primitive orbit}\to
+ \text{zeta}\to\text{prime-orbit theorem}.
+\]
+Therefore the broad OS slogan ``primitive objects plus a gauge support a prime-number law'' has strong precedents. The comparative value of OS lies in treating the same pipeline outside a single dynamical category and in allowing a separate measured incidence geometry and finite symmetry quotient.
+
+The RRFS--OS bridge should also be read against this background. The boundary OS is analogous to the classical situation where the Euler product itself already identifies the primitive analytic objects. The Pratt OS is more unusual because its primitive transform is taken in a second, recursively induced order rather than the ordinary factorization boundary.
+
+\section{Rooted-tree Hopf algebras, cuts, and arithmetic on trees}
+Connes and Kreimer's rooted-tree Hopf algebra uses admissible cuts to encode recursive decomposition of rooted trees \cite{ConnesKreimer1998}. This is an important antecedent for any theory that associates algebraic data with tree cuts, although an admissible cut in the Connes--Kreimer coproduct is not the same object as a complete node front in the Pratt-front manuscripts.
+
+Luccio defines an intrinsic arithmetic directly on rooted unordered trees, including addition, multiplication, prime trees, and unique factorization \cite{Luccio2016}. This is the closest classical comparator for the Hadamard--Pratt note \cite{LekaHadamard}, but the constructions differ sharply. Luccio starts with trees and creates arithmetic operations on them. The Hadamard--Pratt manuscript starts with the recursive coordinate embedding of natural numbers and transports coordinatewise multiplication back to a new operation $\star_P$ on $\NN$:
+\[
+ M(a\star_P b)=M(a)\circ M(b).
+\]
+Thus both are ``tree arithmetic,'' but one is intrinsic to rooted trees while the other is induced by Pratt-coordinate geometry.
+
+\section{Front polynomials and complete node fronts}
+The corpus defines complete node fronts of recursive trees and then a generating polynomial by summing a monomial over every complete front \cite{LekaFront,LekaFrontProb}. For a distinguished terminal type $\tau$ the geometric definition yields the recursion
+\[
+ \cF_\tau(T)=T,\qquad
+ \cF_\alpha(T)=1+\prod_\beta\cF_\beta(T)^{B_{\beta,\alpha}},
+\]
+and forest disjoint union gives multiplication.
+
+The general idea of encoding cuts or antichains of rooted trees by algebraic objects has many precedents, including Connes--Kreimer and combinatorial generating-function theory, but in the targeted search no standard theory was located with the specific package
+\[
+\begin{aligned}
+ \text{RRFS predecessor tree}&\longrightarrow\text{complete fronts}\longrightarrow\text{front polynomial}\\
+ &\longrightarrow\text{irreducibility transfer}.
+\end{aligned}
+\]
+The terminology \emph{front-stable}, \emph{front-faithful}, and \emph{front-splitting} therefore appears to be corpus-specific terminology. This should still be presented as a proposed vocabulary, not as a priority claim.
+
+The most interesting comparison theorem in this part is the front--boundary commutation theorem \cite{LekaCommute}. If the front lift is factorization-faithful and the norm is transported, the manuscript shows that the boundary divisor-poset, Moebius/von-Mangoldt mass, zeta function, and weighted PNT data are preserved. Its analytic output is classical once factorization and norm have been transported; the specifically RRFS content is the criterion that the front realization preserves the recursive/factorization structure.
+
+\section{Mason--Stothers and Mahler measure}
+The Pratt-coordinate Mason manuscripts build on the classical polynomial $abc$ theorem of Stothers and Mason \cite{Stothers1981,Mason1984}; Snyder gives a later proof and perspective \cite{Snyder2000}. Consequently the underlying degree--radical inequality is inherited. The corpus-specific question is what information results after the classical theorem is applied to polynomial lifts constructed from Pratt coordinates, and which defects prevent a direct integer $abc$ transfer. The symmetric three-radical inequality \cite{LekaMason} should accordingly be positioned as a derived Pratt-coordinate application of Mason--Stothers, not as a replacement for the classical theorem.
+
+Likewise, the Mahler-measure part of the OS/RRFS manuscripts rests on classical multiplicativity and height theory, with Mahler's work and Chern--Vaaler's distribution results as explicit antecedents \cite{Mahler1962,ChernVaaler2001}. The proposed novelty is the choice to feed Mahler measure through RRFS recursive coordinates or a Pratt-order Moebius transform; the height theory itself is classical.
+
+\section{Nomenclature dictionary}
+\small
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.20\textwidth}>{\raggedright\arraybackslash}p{0.28\textwidth}>{\raggedright\arraybackslash}p{0.43\textwidth}}
+\toprule
+\textbf{Corpus term} & \textbf{Closest classical language} & \textbf{Comparison}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Corpus term} & \textbf{Closest classical language} & \textbf{Comparison}\\
+\midrule
+\endhead
+RRFS atom & prime / irreducible / generator of an arithmetical semigroup & Same boundary role under unique factorization; RRFS atom additionally carries predecessor data.\\
+RRFS predecessor $D\alpha$ & Pratt predecessor $p-1$ in the numerical example & Pratt gives the motivating special case. A general atom-to-factorized-predecessor axiom was not located in Beurling/Knopfmacher.\\
+Transition matrix $B$ & adjacency/incidence matrix of a DAG or substitution system & Entries record factor multiplicities in $D\alpha$; its role is more specific than ordinary graph adjacency.\\
+Green operator $G=(I-B)^{-1}$ & resolvent / path-sum / Green kernel & Linear-algebraically standard; corpus-specific use is recursive factorization propagation and dual energy transport.\\
+Pratt coordinates $M=Gv$ & path multiplicities / cumulative recursive population & Extends Pratt-tree ancestry multiplicities to every object of a factorial monoid.\\
+Boundary OS & arithmetical-semigroup von Mangoldt boundary & Its primitive mass is classical generalized $\Lambda$; OS supplies a measured singleton realization.\\
+Pratt OS & Moebius inversion on a recursively induced poset & Closest antecedent is Ionescu's prime poset plus general incidence algebra; the all-object coordinatewise order is a further construction.\\
+Orbit System primitive layer & exact-period/primitive-orbit data; necklace primitive words & Moebius inversion is classical. OS makes it one axiom among four.\\
+Orbit quotient $E_t/G_t$ & Burnside/P\'olya orbit space & Classical group-action mechanism; OS insists it remain conceptually separate from primitive extraction.\\
+Proper gauge & norm/length/degree/height & Classical in analytic number theory and dynamics; OS treats the gauge as an independent input controlling the growth regime.\\
+Prime-number law & abstract PNT / prime-orbit theorem / asymptotic primitive count & Broad umbrella terminology; should always be qualified by gauge and by whether the count is weighted or unweighted.\\
+Front polynomial & generating polynomial for complete node fronts & Related in spirit to cut enumerators, but the exact RRFS construction and irreducibility vocabulary are corpus-specific.\\
+Front-faithful & factorization-preserving polynomial realization & Ensures distinct RRFS atoms remain distinct irreducibles under the front map.\\
+Hadamard--Pratt product & coordinatewise product transported through an embedding & Unlike intrinsic rooted-tree arithmetic, this operation is induced by the Pratt cone in sequence space.\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Theorem-by-theorem comparison}
+\small
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.25\textwidth}>{\raggedright\arraybackslash}p{0.33\textwidth}>{\raggedright\arraybackslash}p{0.33\textwidth}}
+\toprule
+\textbf{Corpus statement} & \textbf{Classical antecedent} & \textbf{Assessment}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Corpus statement} & \textbf{Classical antecedent} & \textbf{Assessment}\\
+\midrule
+\endhead
+Unique factorization boundary and Euler product & Beurling generalized integers; Knopfmacher arithmetical semigroups & Classical mechanism.\\
+Boundary Moebius inversion of $\log N$ gives $\Lambda$ & Classical divisor-poset inversion and generalized von Mangoldt theory & Classical formula; OS realization is a reformulation.\\
+$-\zeta'/\zeta$ is the transform of primitive boundary mass & Standard Euler-product logarithmic derivative & Classical analytic identity.\\
+Abstract weighted PNT from a zeta singularity plus Tauberian hypotheses & Beurling/Knopfmacher and general Tauberian prime-number theory & Classical analytic step; hypotheses must be explicit.\\
+$M=(I-B)^{-1}v$ and $v=(I-B)M$ & Finite DAG path sums / triangular inversion & Algebraically elementary, but attached here to a general recursive factorization axiom.\\
+Telescoping reconstruction $h=\prod(\alpha/D\alpha)^{M_\alpha(h)}$ & No identical standard formulation located in the targeted literature & Natural consequence of RRFS boundary inversion; potentially characteristic of the framework.\\
+Dual Green transport $c=G^T\varepsilon$ & Linear duality for resolvents & Linear algebra is standard; interpretation as local recursive energies generating atom norms is a framework-specific synthesis.\\
+Pratt order $M(a)\le M(b)$ coordinatewise & Ionescu's prime poset; product orders in incidence theory & Related antecedent, but defined on all RRFS objects rather than only primes.\\
+Pratt-order Moebius primitive mass & Rota/Leroux Moebius inversion & Inversion itself classical; choice of RRFS-induced poset is the new input.\\
+OS finite-field/necklace formula $q^n=\sum_{d\mid n}d a(d)$ & Necklace polynomial, irreducible polynomials over $\FF_q$ & Classical exact formula.\\
+Prime-orbit growth from primitive periodic orbits & Parry--Pollicott, graph/dynamical zeta theory & Classical family of examples.\\
+Front recursion from geometric complete fronts & General tree/cut recursions & The exact complete-front statistic and its RRFS use are the corpus-specific part.\\
+Front-faithful lift preserves factorization and boundary zeta & Transport of structure under a factorization isomorphism & Once faithfulness is proved, boundary invariance is formal; the front-faithfulness problem is the distinctive input.\\
+Hadamard closure of Pratt-coordinate image & Coordinate semiring constructions; rooted-tree arithmetic & No identical theorem located in the targeted references; differs from Luccio's intrinsic tree arithmetic.\\
+Pratt-coordinate Mason inequalities & Mason--Stothers & Derived application; classical theorem supplies the analytic/algebraic engine.\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Manuscript-by-manuscript positioning}
+\subsection{Recursive Factorization Systems and Pratt Forests}
+This is the foundational abstraction of the corpus. Its most classical input is unique factorization; its most distinctive additional datum is the predecessor map $D$ with strict rank descent. The transition matrix, recursive coordinate transform, reconstruction formula, and forest realization should be presented as the proposed RRFS package. Pratt is the motivating numerical case; Ionescu and prime-chain literature are close precedents on primes, while Knopfmacher supplies the abstract factorization boundary.
+
+\subsection{The Category of Ranked Recursive Factorization Systems}
+This manuscript should be compared simultaneously with Knopfmacher's use of categories in relative analytic number theory, Leroux's Moebius categories, and modern decomposition spaces. The difference to emphasize is not ``categories were absent before,'' but that RRFS morphisms preserve predecessor/rank/transition data and hence transport recursive coordinates and tree/front structures.
+
+\subsection{Green Operators and Zeta Functions of RRFS}
+The Euler product, Riemann and Dedekind zeta examples, finite-field polynomial zeta, and generalized von Mangoldt step are classical in content. The comparative contribution is the factorization
+\[
+ \text{recursive local energy}\xrightarrow{G^T}\text{root energy}
+ \xrightarrow{\exp}\text{multiplicative norm}\xrightarrow{}\zeta.
+\]
+The strongest historical formulation is that $G$ supplies an upstream recursive geometry whose output enters established abstract analytic number theory.
+
+\subsection{Orbit Systems}
+The examples have close classical antecedents: finite-field irreducibles and necklaces, primitive periodic orbits, graph cycles, Jordan functions, Grassmann counts, Burnside/Witt structures. The proposed OS contribution is the four-axis bookkeeping that refuses to identify incidence inversion, orbit quotienting, and gauge choice. This is best sold as a comparison framework, not as discovery of primitive-orbit counting itself.
+
+\subsection{A Note on RRFS to Orbit Systems}
+The corrected note is mathematically useful as a dictionary theorem, but its boundary identity is classical generalized prime theory. Its genuine expository value is to show exactly where the RRFS structure stops mattering: after the norm reaches the factorial boundary, the rest is standard divisor-poset/von-Mangoldt/zeta machinery. The sharper research question is then the non-boundary Pratt OS, where the Moebius function comes from $M=Gv$.
+
+\subsection{Front Polynomials and the Front--Boundary Commutation Theorem}
+These notes define front polynomials geometrically from complete node fronts, prove their recursion, introduce front-stability/faithfulness/splitting, and study when the polynomial realization transports the RRFS boundary. Classical rooted-tree cut theories provide nearby language, but the exact factorization-faithfulness problem is not a standard consequence of those theories. This is one of the more corpus-specific directions.
+
+\subsection{Complete Node Fronts and Root-Label Fields}
+The complete-front manuscript interprets the numerical polynomials $f_n$ as front-generating functions and normalizes them to probability generating functions. The root-label-field manuscript enlarges this to a multivariate master polynomial and then specializes to arithmetic fibers, including completely multiplicative functions. Generating functions, partition functions, cumulants, Gram matrices, and monodromy are standard tools individually; the distinctive issue is whether the Pratt-front master object yields nontrivial theorems not available from those tools separately.
+
+\subsection{Pratt Coordinates and Pratt--Mason applications}
+The foundational Mason--Stothers theorem is classical. The manuscript's new input is the Pratt-coordinate polynomial lift and the capacity/addition-defect analysis that determines what can and cannot be transferred back to integer arithmetic. The symmetric three-radical note should be cited explicitly as an application built on Mason--Stothers rather than as a new abc principle independent of it.
+
+\subsection{Hadamard--Pratt Arithmetic}
+This manuscript constructs a second multiplication-like operation on $\NN$ by transporting coordinatewise multiplication through the Pratt-coordinate image. Luccio's arithmetic on rooted trees is a useful comparator, but it starts from a different object and different operations. The multiplication table in the archive is supporting computational data, not a separate theoretical contribution.
+
+\section{Where the classical literature ends and the corpus begins}
+A conservative literature positioning is summarized by the following division.
+
+\subsection{Strongly classical or directly inherited}
+Unique factorization plus a norm; Euler products; generalized von Mangoldt functions; abstract prime-number theorems; divisibility Moebius inversion; finite-field irreducible-polynomial counts; Dedekind zeta functions; necklaces and Witt/Burnside identities; primitive periodic orbit zetas and prime-orbit theorems; Mason--Stothers; Mahler measure and its height distribution.
+
+\subsection{Primarily synthetic or terminological}
+The four OS axioms as a single comparison template; ``prime-number law'' as an umbrella term for growth of primitive quotient atoms under an explicitly named gauge; Boundary OS as a measured realization of the classical generalized von Mangoldt boundary; terminal RRFS realizations of Jordan/Grassmann atom families.
+
+\subsection{More structurally distinctive in the targeted search}
+The general RRFS datum $(H,\cA,D,\rho)$ with factorized predecessors; recursive transition matrix $B$ and Green coordinate transform $G=(I-B)^{-1}$; telescoping reconstruction in recursive coordinates; the all-object Pratt order induced by $M$; the attempt to compare Pratt-Moebius primitive mass with boundary zeta data; front-stability/front-faithfulness and front--boundary commutation; Hadamard closure of the Pratt-coordinate cone. These are the places where a future literature search and theorem development should concentrate.
+
+\section{Recommended priority-safe language}
+The corpus would be strongest if it explicitly acknowledges the classical boundary and then states its extra layer. A formulation such as the following is historically defensible:
+
+\begin{quote}
+Abstract analytic number theory, from Beurling generalized primes through Knopfmacher's arithmetical semigroups, already provides a general framework for unique factorization, zeta functions, generalized von Mangoldt weights, and prime-number theorems. The present RRFS framework begins one level upstream: each atom carries a rank-decreasing predecessor whose factorization generates a recursive tree and a Green operator. Orbit Systems provide a separate language for incidence-primitive extraction, symmetry quotienting, and gauges. The aim is to study how this added recursive geometry interacts with the classical analytic boundary.
+\end{quote}
+
+For Ionescu one can say:
+\begin{quote}
+Ionescu previously introduced a divisibility-based partial order on primes, related it to Pratt trees and rooted-tree Hopf algebras, and proposed a connection with the PNT. RRFS extends the perspective from the prime set to arbitrary factorial monoids, retains predecessor multiplicities, and equips the resulting dependency geometry with explicit recursive coordinates and a Green operator.
+\end{quote}
+
+For the boundary-transfer note one should say:
+\begin{quote}
+The boundary construction recasts the classical generalized von Mangoldt transform of an arithmetical semigroup as a measured Orbit System; its role is to identify the classical analytic boundary inside the larger RRFS/OS framework.
+\end{quote}
+
+\section{Open comparative questions suggested by the literature}
+The literature comparison points toward questions that are less likely to collapse to existing abstract analytic number theory:
+\begin{enumerate}[label=(\arabic*)]
+\item Characterize which predecessor maps $D$ on a fixed arithmetical semigroup lead to analytically distinguishable Green geometries despite identical boundary zeta functions.
+\item Determine when the Pratt-order Moebius mass is positive and when it admits a transform or explicit formula controlled by the boundary zeta.
+\item Find conditions under which front-polynomial realizations are front-faithful; classify front-splitting and atom collisions.
+\item Compare RRFS morphisms with CULF/decomposition-space morphisms and with Knopfmacher's arithmetical categories, rather than merely placing all three under the word ``category.''
+\item Decide whether Hadamard--Pratt arithmetic has an intrinsic rooted-tree or Hopf-algebra description comparable to, but distinct from, known rooted-tree arithmetics.
+\item Identify examples where the OS separation of primitive extraction, symmetry quotient, and gauge produces a theorem not already visible in the standard necklace, dynamical, or arithmetical-semigroup formulation.
+\end{enumerate}
+
+\section{Conclusion}
+The manuscripts belong to a broad and mature landscape rather than an isolated new theory of primes. Beurling and Knopfmacher already abstract the analytic prime boundary. Rota, Leroux, and decomposition-space theory abstract Moebius inversion. Necklace/Witt/Burnside theory and prime-orbit theory already make primitive quotient objects central. Pratt, Ford--Konyagin--Luca, and Ionescu provide direct precedents for the prime-chain and rooted-tree geometry.
+
+The most useful research-level distinction made by the corpus is therefore a layering distinction. Ordinary abstract analytic number theory sees
+\[
+ (H,\cA,N)\longrightarrow\zeta\longrightarrow\Lambda\longrightarrow\mathrm{PNT}.
+\]
+RRFS proposes an upstream recursive geometry
+\[
+ D\longrightarrow B\longrightarrow G\longrightarrow M,
+\]
+while OS proposes a transverse incidence/orbit/gauge geometry. The boundary transfer lands back in classical territory; the potentially less classical questions concern what survives specifically because of the extra predecessor and Pratt-order structures. That is the natural place to focus future claims and comparisons.
+
+\clearpage
+\begin{thebibliography}{99}
+\section*{Classical and comparison literature}
+
+\bibitem{Beurling1937} A. Beurling, \emph{Analyse de la loi asymptotique de la distribution des nombres premiers g\'en\'eralis\'es. I}, Acta Math. \textbf{68} (1937), 255--291.
+\bibitem{Nyman1949} B. Nyman, \emph{A general prime number theorem}, Acta Math. \textbf{81} (1949), 299--307.
+\bibitem{Diamond1969} H. G. Diamond, \emph{The prime number theorem for Beurling's generalized numbers}, J. Number Theory \textbf{1} (1969), 200--207.
+\bibitem{DiamondZhang2016} H. G. Diamond and W.-B. Zhang, \emph{Beurling Generalized Numbers}, Mathematical Surveys and Monographs 213, American Mathematical Society, 2016.
+\bibitem{DebruyneVindas2016} G. Debruyne and J. Vindas, \emph{On PNT equivalences for Beurling numbers}, Monatsh. Math. \textbf{184} (2017), 401--424; arXiv:1606.03579.
+
+\bibitem{Knopfmacher1972a} J. Knopfmacher, \emph{Arithmetical properties of finite rings and algebras, and analytic number theory}, J. Reine Angew. Math. \textbf{252} (1972), 16--43.
+\bibitem{Knopfmacher1972b} J. Knopfmacher, \emph{Arithmetical properties of finite rings and algebras, and analytic number theory. II}, J. Reine Angew. Math. \textbf{254} (1972), 74--99.
+\bibitem{Knopfmacher1973} J. Knopfmacher, \emph{Arithmetical properties of finite rings and algebras, and analytic number theory. III. Finite modules and algebras over Dedekind domains}, J. Reine Angew. Math. \textbf{259} (1973), 157--170.
+\bibitem{Knopfmacher1974a} J. Knopfmacher, \emph{Arithmetical properties of finite rings and algebras, and analytic number theory. IV. Relative asymptotic enumeration and $L$-series}, J. Reine Angew. Math. \textbf{270} (1974), 97--114.
+\bibitem{Knopfmacher1974b} J. Knopfmacher, \emph{Arithmetical properties of finite rings and algebras, and analytical number theory. V. Categories and relative analytic number theory}, J. Reine Angew. Math. \textbf{271} (1974), 95--121.
+\bibitem{Knopfmacher1975} J. Knopfmacher, \emph{Abstract Analytic Number Theory}, North-Holland Mathematical Library 12, North-Holland, 1975.
+\bibitem{Knopfmacher1979} J. Knopfmacher, \emph{Analytic Arithmetic of Algebraic Function Fields}, Lecture Notes in Pure and Applied Mathematics 50, Marcel Dekker, 1979.
+\bibitem{KnopfmacherZhang2001} J. Knopfmacher and W.-B. Zhang, \emph{Number Theory Arising from Finite Fields: Analytic and Probabilistic Theory}, Marcel Dekker, 2001.
+
+\bibitem{Pratt1975} V. R. Pratt, \emph{Every prime has a succinct certificate}, SIAM J. Comput. \textbf{4} (1975), 214--220.
+\bibitem{FordKonyaginLuca2010} K. Ford, S. V. Konyagin, and F. Luca, \emph{Prime chains and Pratt trees}, Geom. Funct. Anal. \textbf{20} (2010), 1231--1258.
+\bibitem{Ionescu2015} L. M. Ionescu, \emph{A natural partial order on the prime numbers}, Notes Number Theory Discrete Math. \textbf{21} (2015), no. 1, 1--9; arXiv:1407.6659.
+\bibitem{Ionescu2022} L. M. Ionescu, \emph{On Prime Numbers and The Riemann Zeros}, arXiv:2204.00899, 2022.
+
+\bibitem{Rota1964} G.-C. Rota, \emph{On the foundations of combinatorial theory I. Theory of M\"obius functions}, Z. Wahrscheinlichkeitstheorie verw. Gebiete \textbf{2} (1964), 340--368.
+\bibitem{Leroux1975} P. Leroux, \emph{Les cat\'egories de M\"obius}, Cahiers Topologie G\'eom. Diff\'erentielle \textbf{16} (1975), 280--282.
+\bibitem{GKT1} I. G\'alvez-Carrillo, J. Kock, and A. Tonks, \emph{Decomposition spaces, incidence algebras and M\"obius inversion I: Basic theory}, Adv. Math. \textbf{331} (2018), 952--1015.
+\bibitem{GKT2} I. G\'alvez-Carrillo, J. Kock, and A. Tonks, \emph{Decomposition spaces, incidence algebras and M\"obius inversion II: Completeness, length filtration, and finiteness}, Adv. Math. \textbf{333} (2018), 1242--1292.
+\bibitem{GKT3} I. G\'alvez-Carrillo, J. Kock, and A. Tonks, \emph{Decomposition spaces, incidence algebras and M\"obius inversion III: The decomposition space of M\"obius intervals}, Adv. Math. \textbf{334} (2018), 544--584.
+
+\bibitem{ArtinMazur1965} M. Artin and B. Mazur, \emph{On periodic points}, Ann. of Math. (2) \textbf{81} (1965), 82--99.
+\bibitem{MetropolisRota1983} N. Metropolis and G.-C. Rota, \emph{Witt vectors and the algebra of necklaces}, Adv. Math. \textbf{50} (1983), 95--125.
+\bibitem{DressSiebeneicher1988} A. W. M. Dress and C. Siebeneicher, \emph{The Burnside ring of profinite groups and the Witt vector construction}, Adv. Math. \textbf{70} (1988), 87--132.
+\bibitem{ParryPollicott1990} W. Parry and M. Pollicott, \emph{Zeta Functions and the Periodic Orbit Structure of Hyperbolic Dynamics}, Ast\'erisque 187--188, Soci\'et\'e Math\'ematique de France, 1990.
+\bibitem{Terras2010} A. Terras, \emph{Zeta Functions of Graphs: A Stroll through the Garden}, Cambridge Studies in Advanced Mathematics 128, Cambridge University Press, 2010.
+
+\bibitem{ConnesKreimer1998} A. Connes and D. Kreimer, \emph{Hopf algebras, renormalization and noncommutative geometry}, Comm. Math. Phys. \textbf{199} (1998), 203--242.
+\bibitem{Luccio2016} F. Luccio, \emph{An arithmetic for rooted trees}, in: 8th International Conference on Fun with Algorithms (FUN 2016), LIPIcs 49, Article 23, 2016.
+
+\bibitem{Stothers1981} W. W. Stothers, \emph{Polynomial identities and Hauptmoduln}, Quart. J. Math. Oxford Ser. (2) \textbf{32} (1981), 349--370.
+\bibitem{Mason1984} R. C. Mason, \emph{Diophantine Equations over Function Fields}, London Mathematical Society Lecture Note Series 96, Cambridge University Press, 1984.
+\bibitem{Snyder2000} N. Snyder, \emph{An alternate proof of Mason's theorem}, Elem. Math. \textbf{55} (2000), 93--94.
+\bibitem{Mahler1962} K. Mahler, \emph{On some inequalities for polynomials in several variables}, J. London Math. Soc. \textbf{37} (1962), 341--344.
+\bibitem{ChernVaaler2001} S.-J. Chern and J. D. Vaaler, \emph{The distribution of values of Mahler's measure}, J. Reine Angew. Math. \textbf{540} (2001), 1--47.
+
+\bibitem{Neukirch1999} J. Neukirch, \emph{Algebraic Number Theory}, Grundlehren der mathematischen Wissenschaften 322, Springer, 1999.
+\bibitem{Rosen2002} M. Rosen, \emph{Number Theory in Function Fields}, Graduate Texts in Mathematics 210, Springer, 2002.
+\bibitem{LidlNiederreiter1997} R. Lidl and H. Niederreiter, \emph{Finite Fields}, 2nd ed., Encyclopedia of Mathematics and its Applications 20, Cambridge University Press, 1997.
+\bibitem{Tenenbaum2015} G. Tenenbaum, \emph{Introduction to Analytic and Probabilistic Number Theory}, 3rd ed., Graduate Studies in Mathematics 163, American Mathematical Society, 2015.
+\bibitem{Stanley2012} R. P. Stanley, \emph{Enumerative Combinatorics, Volume 1}, 2nd ed., Cambridge Studies in Advanced Mathematics 49, Cambridge University Press, 2012.
+
+\section*{2026 manuscript corpus reviewed}
+\bibitem{LekaRRFS} O. Leka, \emph{Recursive Factorization Systems and Pratt Forests: A unified theory for natural numbers, Pratt polynomials, general polynomial factorization, and hierarchical dependency systems}, draft, 2026.
+\bibitem{LekaCategory} O. Leka, \emph{Recursive Factorizations: The Category of Ranked Recursive Factorization Systems}, revised draft, 2026.
+\bibitem{LekaGreen} O. Leka, \emph{Green Operators and Zeta Functions of Recursive Factorization Systems: From Pratt Geometry to Euler Products}, draft, 2026.
+\bibitem{LekaOS} O. Leka, \emph{Orbit Systems: Products, Geometric Families, and Pratt Layers}, draft, 2026.
+\bibitem{LekaBoundary} O. Leka, \emph{A Note on RRFS to Orbit Systems: Boundary M\"obius Inversion, Zeta Functions, and Prime-Number Laws}, corrected draft, 2026.
+\bibitem{LekaFront} O. Leka, \emph{Front Polynomials of Ranked Recursive Factorization Systems}, draft, 2026.
+\bibitem{LekaCommute} O. Leka, \emph{The Front--Boundary Commutation Theorem: Front Polynomials, Boundary Orbit Systems, Zeta Functions, and Prime-Number Laws}, draft, 2026.
+\bibitem{LekaFrontProb} O. Leka, \emph{Complete Node Fronts of Pratt Forests: Generating Polynomials and a Probabilistic Interpretation of $f_n(x)$}, draft, 2026.
+\bibitem{LekaCoordinates} O. Leka, \emph{Pratt Coordinates for Natural Numbers and Monic Rational Polynomials: Reconstruction, Hilbert-Space Embeddings, and a Pratt-Coordinate Form of Mason--Stothers}, version 0.2, 2026.
+\bibitem{LekaHadamard} O. Leka, \emph{Hadamard--Pratt Arithmetic: A Coordinatewise Product on Pratt Coordinates, a Semiring on $\NN$, and the Spectrum of Its Unitization}, draft, 2026.
+\bibitem{LekaTable} O. Leka, \emph{Hadamard--Pratt Multiplication Table 1 to 12}, supplementary table, 2026.
+\bibitem{LekaFields} O. Leka, \emph{Root-Label Fields on Pratt Forests: An Application-First Multivariate Theory of Complete Fronts, Coordinate Transport, Arithmetic Fibres, and Monodromy}, version 0.3, 2026.
+\bibitem{LekaMason} O. Leka, \emph{The Symmetric Three-Radical Pratt--Mason Inequality: An independent proof and a catalogue of applications}, draft, 2026.
+\bibitem{LekaREADME} O. Leka, \emph{notes\_on\_pratt\_trees project README}, accompanying archive, 2026.
+\end{thebibliography}
+
+\end{document}
